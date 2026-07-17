@@ -119,25 +119,24 @@ export default function Home() {
       <Navbar />
 
       {/* 1. HERO SECTION */}
-      <section className="relative h-screen w-full flex items-center bg-charcoal-900 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/hero-bg.png"
-            alt="KC Cosmetics and Crochet Showroom"
-            fill
-            priority
-            quality={100}
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
+      <section
+        className="relative w-full flex items-center overflow-hidden"
+        style={{
+          height: '100svh',
+          minHeight: '600px',
+          backgroundImage: 'url(/hero-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#2a1a1f',
+        }}
+      >
+        {/* Subtle overlay for readability */}
+        <div className="absolute inset-0 bg-black/10" />
 
-        {/* Hero Content Staging */}
+        {/* Hero Content */}
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mt-20">
         </div>
-
-
       </section>
 
       {/* 2. ENGAGEMENTS */}
