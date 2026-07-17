@@ -15,7 +15,8 @@ import {
   TrendingUp,
   DollarSign,
   Package,
-  AlertCircle
+  AlertCircle,
+  Edit
 } from "lucide-react";
 import { useShop, Order } from "@/context/ShopContext";
 import { Product, CATEGORIES, BRANDS, SIZES, CONDITIONS, TARGETS } from "@/data/initialData";
@@ -54,6 +55,7 @@ export default function AdminPage() {
   // Tabs: "dashboard", "products", "orders", "customers"
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
 
   // New Product form state
   const [newProduct, setNewProduct] = useState({
@@ -110,7 +112,11 @@ export default function AdminPage() {
     // Set standard Unsplash fallback if no image url provided
     const img1 = newProduct.image1.trim() || "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80";
     const imagesArray = [img1];
-    if (newProduct.image2.trim()) imagesArray.push(newProduct.image2.trim());
+    if (newProduct.image2.trim() && !newProduct.image2.startsWith("data:") && newProduct.image2 !== "https://images.unsplash.com/...") {
+       imagesArray.push(newProduct.image2.trim());
+    } else if (newProduct.image2.startsWith("data:")) {
+       imagesArray.push(newProduct.image2);
+    }
 
     const detailsArray = [
       `Matière : ${newProduct.material}`,
@@ -120,20 +126,40 @@ export default function AdminPage() {
     ];
 
     try {
-      await addProduct({
-        name: newProduct.name,
-        description: newProduct.description,
-        price: Number(newProduct.price),
-        category: newProduct.category,
-        size: newProduct.size,
-        brand: newProduct.brand,
-        condition: newProduct.condition,
-        images: imagesArray,
-        isNewArrival: true,
-        isBestSeller: false,
-        details: detailsArray,
-        target: newProduct.target
-      });
+      if (editingProductId) {
+        // Find existing product to preserve fields not in form
+        const existingProduct = products.find(p => p.id === editingProductId);
+        if (existingProduct) {
+          await editProduct({
+            ...existingProduct,
+            name: newProduct.name,
+            description: newProduct.description,
+            price: Number(newProduct.price),
+            category: newProduct.category,
+            size: newProduct.size,
+            brand: newProduct.brand,
+            condition: newProduct.condition,
+            images: imagesArray,
+            details: detailsArray,
+            target: newProduct.target as "Homme" | "Femme" | "Enfant" | "Unisexe"
+          });
+        }
+      } else {
+        await addProduct({
+          name: newProduct.name,
+          description: newProduct.description,
+          price: Number(newProduct.price),
+          category: newProduct.category,
+          size: newProduct.size,
+          brand: newProduct.brand,
+          condition: newProduct.condition as any,
+          images: imagesArray,
+          isNewArrival: true,
+          isBestSeller: false,
+          details: detailsArray,
+          target: newProduct.target as any
+        });
+      }
 
       setFormSuccess(true);
       // Reset Form
@@ -158,12 +184,45 @@ export default function AdminPage() {
       setTimeout(() => {
         setFormSuccess(false);
         setIsAddFormOpen(false);
+        setEditingProductId(null);
       }, 1500);
     } catch (error) {
-      console.error("Failed to add product:", error);
+      console.error("Failed to save product:", error);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleEditClick = (p: Product) => {
+    setEditingProductId(p.id);
+    
+    // Attempt to extract values from details array if possible, otherwise use defaults
+    const matMatch = p.details[0]?.match(/Matière : (.*)/);
+    const chestMatch = p.details[1]?.match(/Poitrine : (.*?) \|/);
+    const lengthMatch = p.details[1]?.match(/Longueur : (.*?)(?: \||$)/);
+    const sleevesMatch = p.details[1]?.match(/Manches : (.*)/);
+    const originMatch = p.details[2]?.match(/Origine : (.*)/);
+
+    setNewProduct({
+      name: p.name,
+      description: p.description,
+      price: p.price,
+      category: p.category,
+      size: p.size,
+      brand: p.brand,
+      condition: p.condition as any,
+      target: p.target as any,
+      image1: p.images[0] || "",
+      image2: p.images[1] || "",
+      material: matMatch ? matMatch[1] : "100% Coton",
+      chest: chestMatch ? chestMatch[1] : "22 in",
+      length: lengthMatch ? lengthMatch[1] : "26 in",
+      sleeves: sleevesMatch ? sleevesMatch[1] : "",
+      origin: originMatch ? originMatch[1] : "Fabriqué aux États-Unis"
+    });
+    
+    setIsAddFormOpen(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -394,7 +453,7 @@ export default function AdminPage() {
                     className="bg-white border border-sand-100 rounded-sm p-6 sm:p-8 shadow-3xs overflow-hidden"
                   >
                     <h3 className="font-serif text-lg font-semibold text-charcoal-900 mb-4 pb-2 border-b border-sand-50">
-                      Add New Pre-loved Garment
+                      {editingProductId ? "Modifier le vêtement" : "Ajouter un nouveau vêtement"}
                     </h3>
                     
                     <form onSubmit={handleAddProductSubmit} className="space-y-4 text-xs">
@@ -643,7 +702,14 @@ export default function AdminPage() {
                             {p.inStock ? "In Stock" : "Sold"}
                           </button>
                         </td>
-                        <td className="p-4 text-right">
+                        <td className="p-4 text-right whitespace-nowrap">
+                          <button
+                            onClick={() => handleEditClick(p)}
+                            className="text-charcoal-400 hover:text-charcoal-900 transition-colors p-1 mr-1"
+                            title="Edit garment"
+                          >
+                            <Edit className="h-4.5 w-4.5" />
+                          </button>
                           <button
                             onClick={() => deleteProduct(p.id)}
                             className="text-charcoal-400 hover:text-red-500 transition-colors p-1"
