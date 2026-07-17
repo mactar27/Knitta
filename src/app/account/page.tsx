@@ -66,10 +66,10 @@ function AccountContent() {
   // Filter wishlist products
   const wishlistProducts = products.filter((p) => wishlist.includes(p.id));
 
-  // Filter orders for the current user
+  // Filter orders for the current user (by name match since no email on Order)
   const userOrders = orders.filter((o) => {
     if (!currentUser) return false;
-    return o.customerEmail.toLowerCase() === currentUser.email.toLowerCase();
+    return o.customerName.toLowerCase().includes(currentUser.name.toLowerCase());
   });
 
   const getStatusColor = (status: string) => {
