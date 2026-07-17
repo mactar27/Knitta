@@ -120,17 +120,34 @@ export default function Home() {
 
       {/* 1. HERO SECTION */}
       <section
-        className="relative w-full flex items-center overflow-hidden"
+        className="relative w-full flex items-center overflow-hidden bg-charcoal-900"
         style={{
           height: '100svh',
           minHeight: '600px',
-          backgroundImage: 'url(/hero-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: '#2a1a1f',
         }}
       >
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: 'url(/hero-bg.png)',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: '#AC4E62', /* Matching the background color of the image */
+          }}
+        >
+          {/* Use CSS media queries to handle the background size */}
+          <style dangerouslySetInnerHTML={{__html: `
+            div[style*="hero-bg.png"] {
+              background-size: contain;
+            }
+            @media (min-width: 768px) {
+              div[style*="hero-bg.png"] {
+                background-size: cover;
+              }
+            }
+          `}} />
+        </div>
+        
         {/* Subtle overlay for readability */}
         <div className="absolute inset-0 bg-black/10" />
 
