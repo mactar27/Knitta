@@ -1,0 +1,26 @@
+{
+  "name": "KnittaCorner",
+  "short_name": "Knitta",
+  "description": "Sacs crochetés main & cosmétiques tendance par Binta",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCF5F2",
+  "theme_color": "#AB4E61",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "lang": "fr"
+}

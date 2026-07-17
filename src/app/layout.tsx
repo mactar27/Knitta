@@ -15,11 +15,27 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "KnittaCorner | Crochet Fait Main & Cosmétiques",
   description: "Découvrez les créations uniques en crochet faites main à Dakar par Binta et une sélection tendance de cosmétiques, maquillage et accessoires.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "KnittaCorner",
+  },
   icons: {
     icon: "/logo.png",
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "theme-color": "#AB4E61",
+    "msapplication-TileColor": "#AB4E61",
+    "msapplication-TileImage": "/logo.png",
   },
 };
 
@@ -36,6 +52,17 @@ export default function RootLayout({
         <ShopProvider>
           {children}
         </ShopProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js');
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
