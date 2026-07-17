@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Product {
+  id           String      @id @default(uuid())
+  name         String
+  description  String      @db.Text
+  price        Float
+  category     String
+  size         String
+  brand        String
+  condition    String
+  inStock      Boolean     @default(true)
+  isNewArrival Boolean     @default(false)
+  isBestSeller Boolean     @default(false)
+  rating       Float       @default(0)
+  target       String
+  images       Json        // Array of image URLs
+  details      Json        // Array of strings (specs)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  
+  reviews      Review[]
+  orderItems   OrderItem[]
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  user      String
+  rating    Int
+  date      String
+  comment   String   @db.Text
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  customerName  String
+  customerPhone String
+  customerAddr  String
+  date          String
+  status        String      @default("Pending")
+  total         Float
+  createdAt     DateTime    @default(now())
+  
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
+}
