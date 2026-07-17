@@ -131,18 +131,18 @@ export default function Home() {
           style={{
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: '#AC4E62', /* Fallback background color */
+            backgroundColor: '#40271D', /* Chocolate brown fallback background color */
           }}
         >
           {/* Use CSS media queries to handle the background image and size */}
           <style dangerouslySetInnerHTML={{__html: `
             .hero-bg-container {
-              background-image: url('/tel.png');
-              background-size: 100% 100%;
+              background-image: url('/hero-bg.png');
+              background-size: 100% auto;
+              background-position: center center;
             }
             @media (min-width: 768px) {
               .hero-bg-container {
-                background-image: url('/hero-bg.png');
                 background-size: cover;
               }
             }

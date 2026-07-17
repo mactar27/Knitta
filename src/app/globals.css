@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FCF9FA; /* Soft blush cream */
-  --foreground: #21181A; /* Plum charcoal */
+  --background: #FCFAF8; /* Warm cream/champagne */
+  --foreground: #291D17; /* Deep chocolate/espresso */
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
 }
@@ -13,35 +13,36 @@
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   
-  /* Muted Premium Colors */
-  --color-olive-50: #F4F6F4;
-  --color-olive-100: #E6ECE6;
-  --color-olive-600: #4A5D4E;
-  --color-olive-700: #3C4B3F;
-  --color-olive-800: #2E3A31;
+  /* Muted Premium Colors (Sage/Bronze accents) */
+  --color-olive-50: #F6F5F3;
+  --color-olive-100: #EBE8E3;
+  --color-olive-600: #7A6953;
+  --color-olive-700: #5E4E3B;
+  --color-olive-800: #423627;
   
-  /* Retained class names "terracotta" but changed to darker blush/rose hues */
-  --color-terracotta-50: #F9ECEE;
-  --color-terracotta-100: #F0D5D9;
-  --color-terracotta-600: #AB4E61;
-  --color-terracotta-700: #8A3B4A;
+  /* Terracotta changed to Bronze/Caramel hues */
+  --color-terracotta-50: #F8F4F0;
+  --color-terracotta-100: #ECDCCC;
+  --color-terracotta-600: #A87B51;
+  --color-terracotta-700: #8A5F3B;
   
-  /* Sand colors tinted with cool blush */
-  --color-sand-50: #FAF7F7;
-  --color-sand-100: #F2EAEB;
-  --color-sand-200: #E4D5D7;
-  --color-sand-300: #D2BFC2;
+  /* Sand colors tinted with warm champagne/beige */
+  --color-sand-50: #FCFAF8;
+  --color-sand-100: #F4EDE4;
+  --color-sand-200: #E6D8C9;
+  --color-sand-300: #D4BEA9;
   
-  --color-gold-400: #E5C158;
-  --color-gold-500: #D4AF37;
-  --color-gold-600: #B89324;
+  /* Gold to match the sparkly text */
+  --color-gold-400: #E5C57F;
+  --color-gold-500: #D4A346;
+  --color-gold-600: #B8862F;
   
-  /* Charcoal colors tinted with burgundy/plum */
-  --color-charcoal-100: #EAE7E8;
-  --color-charcoal-400: #8E888A;
-  --color-charcoal-800: #2B2325;
-  --color-charcoal-900: #1F1719;
-  --color-charcoal-950: #140E0F;
+  /* Charcoal colors tinted with rich espresso/chocolate */
+  --color-charcoal-100: #EAE6E4;
+  --color-charcoal-400: #8E827A;
+  --color-charcoal-800: #3D2D26;
+  --color-charcoal-900: #291D17;
+  --color-charcoal-950: #1A120E;
 }
 
 body {
