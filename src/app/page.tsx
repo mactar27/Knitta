@@ -129,23 +129,25 @@ export default function Home() {
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: 'url(/hero-bg.png)',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: '#AC4E62', /* Matching the background color of the image */
+            backgroundColor: '#AC4E62', /* Fallback background color */
           }}
         >
-          {/* Use CSS media queries to handle the background size */}
+          {/* Use CSS media queries to handle the background image and size */}
           <style dangerouslySetInnerHTML={{__html: `
-            div[style*="hero-bg.png"] {
-              background-size: contain;
+            .hero-bg-container {
+              background-image: url('/tel.png');
+              background-size: cover;
             }
             @media (min-width: 768px) {
-              div[style*="hero-bg.png"] {
+              .hero-bg-container {
+                background-image: url('/hero-bg.png');
                 background-size: cover;
               }
             }
           `}} />
+          <div className="absolute inset-0 w-full h-full hero-bg-container"></div>
         </div>
         
         {/* Subtle overlay for readability */}
