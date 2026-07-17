@@ -264,6 +264,12 @@ export const INITIAL_PRODUCTS: Product[] = [
 
 export const CATEGORIES = ["Tout", "Crochet & Fait Main", "Beauté & Cosmétique", "Accessoires & Chaussures"];
 export const BRANDS = ["Tout", "KnittaCorner", "Kiss Beauty", "Revolution Makeup", "Beauty Treats", "Autre"];
-export const SIZES = ["Tout", "Taille Unique", "38-39", "M", "L"];
+export const SIZES = [
+  "Tout",
+  "Taille Unique",
+  "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL",
+  "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45",
+  "36-37", "38-39", "40-41", "42-43"
+];
 export const CONDITIONS = ["Tout", "Neuf", "Fait main", "Excellent état"];
 export const TARGETS = ["Tout", "Femme", "Homme", "Enfant", "Unisexe"];

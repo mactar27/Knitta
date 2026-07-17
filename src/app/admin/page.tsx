@@ -100,9 +100,12 @@ export default function AdminPage() {
   });
   const customersList = Object.values(customersMap);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // FORM SUBMIT HANDLER
-  const handleAddProductSubmit = (e: React.FormEvent) => {
+  const handleAddProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     // Set standard Unsplash fallback if no image url provided
     const img1 = newProduct.image1.trim() || "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80";
@@ -116,45 +119,51 @@ export default function AdminPage() {
       "Entretien : Nettoyage à sec recommandé"
     ];
 
-    addProduct({
-      name: newProduct.name,
-      description: newProduct.description,
-      price: Number(newProduct.price),
-      category: newProduct.category,
-      size: newProduct.size,
-      brand: newProduct.brand,
-      condition: newProduct.condition,
-      images: imagesArray,
-      isNewArrival: true,
-      isBestSeller: false,
-      details: detailsArray,
-      target: newProduct.target
-    });
+    try {
+      await addProduct({
+        name: newProduct.name,
+        description: newProduct.description,
+        price: Number(newProduct.price),
+        category: newProduct.category,
+        size: newProduct.size,
+        brand: newProduct.brand,
+        condition: newProduct.condition,
+        images: imagesArray,
+        isNewArrival: true,
+        isBestSeller: false,
+        details: detailsArray,
+        target: newProduct.target
+      });
 
-    setFormSuccess(true);
-    // Reset Form
-    setNewProduct({
-      name: "",
-      description: "",
-      price: 0,
-      category: "Vestes",
-      size: "M",
-      brand: "Indépendant",
-      condition: "Excellent état",
-      target: "Unisexe",
-      image1: "",
-      image2: "",
-      material: "100% Coton",
-      chest: "22 in",
-      length: "26 in",
-      sleeves: "24 in",
-      origin: "Fabriqué aux États-Unis"
-    });
+      setFormSuccess(true);
+      // Reset Form
+      setNewProduct({
+        name: "",
+        description: "",
+        price: 0,
+        category: "Vestes",
+        size: "M",
+        brand: "Indépendant",
+        condition: "Excellent état",
+        target: "Unisexe",
+        image1: "",
+        image2: "",
+        material: "100% Coton",
+        chest: "22 in",
+        length: "26 in",
+        sleeves: "24 in",
+        origin: "Fabriqué aux États-Unis"
+      });
 
-    setTimeout(() => {
-      setFormSuccess(false);
-      setIsAddFormOpen(false);
-    }, 1500);
+      setTimeout(() => {
+        setFormSuccess(false);
+        setIsAddFormOpen(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Failed to add product:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -492,23 +501,39 @@ export default function AdminPage() {
                       {/* Image URLs and measurements specs */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase">Photo Principale (URL Unsplash)</label>
+                          <label className="font-bold text-charcoal-800 uppercase">Photo Principale</label>
                           <input
-                            type="text"
-                            value={newProduct.image1}
-                            onChange={(e) => setNewProduct({ ...newProduct, image1: e.target.value })}
-                            placeholder="https://images.unsplash.com/..."
-                            className="w-full border border-sand-200 bg-[#FCFAF7] p-2 rounded-xs"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setNewProduct({ ...newProduct, image1: reader.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                            className="w-full border border-sand-200 bg-[#FCFAF7] p-1.5 rounded-xs text-xs file:mr-4 file:py-1 file:px-3 file:rounded-sm file:border-0 file:text-[10px] file:font-bold file:uppercase file:bg-charcoal-900 file:text-white hover:file:bg-terracotta-600 cursor-pointer"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase">Photo de Détail (URL Unsplash)</label>
+                          <label className="font-bold text-charcoal-800 uppercase">Photo de Détail</label>
                           <input
-                            type="text"
-                            value={newProduct.image2}
-                            onChange={(e) => setNewProduct({ ...newProduct, image2: e.target.value })}
-                            placeholder="https://images.unsplash.com/..."
-                            className="w-full border border-sand-200 bg-[#FCFAF7] p-2 rounded-xs"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setNewProduct({ ...newProduct, image2: reader.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                            className="w-full border border-sand-200 bg-[#FCFAF7] p-1.5 rounded-xs text-xs file:mr-4 file:py-1 file:px-3 file:rounded-sm file:border-0 file:text-[10px] file:font-bold file:uppercase file:bg-charcoal-900 file:text-white hover:file:bg-terracotta-600 cursor-pointer"
                           />
                         </div>
                       </div>
@@ -559,9 +584,10 @@ export default function AdminPage() {
 
                       <button
                         type="submit"
-                        className="w-full rounded-sm bg-charcoal-900 py-3 text-xs font-bold uppercase tracking-widest text-white hover:bg-terracotta-600 transition-colors shadow-2xs"
+                        disabled={isSubmitting}
+                        className="w-full rounded-sm bg-charcoal-900 py-3 text-xs font-bold uppercase tracking-widest text-white hover:bg-terracotta-600 transition-colors shadow-2xs disabled:bg-charcoal-400"
                       >
-                        Publish Garment to Catalog
+                        {isSubmitting ? "Enregistrement en cours..." : "Publish Garment to Catalog"}
                       </button>
 
                       {formSuccess && (
