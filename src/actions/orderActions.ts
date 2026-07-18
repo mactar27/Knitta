@@ -10,12 +10,20 @@ type OrderData = {
   date: string;
   status: string;
   total: number;
+  items: { productId: string; quantity: number }[];
 };
 
 export async function getOrders() {
   try {
     const orders = await prisma.order.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        items: {
+          include: {
+            product: true
+          }
+        }
+      }
     });
     return orders;
   } catch (error) {
@@ -26,8 +34,24 @@ export async function getOrders() {
 
 export async function placeOrderAction(data: OrderData) {
   try {
+    const { items, ...orderData } = data;
     const order = await prisma.order.create({
-      data,
+      data: {
+        ...orderData,
+        items: {
+          create: items.map(item => ({
+            product: { connect: { id: item.productId } },
+            quantity: item.quantity
+          }))
+        }
+      },
+      include: {
+        items: {
+          include: {
+            product: true
+          }
+        }
+      }
     });
     revalidatePath("/admin");
     return { success: true, order };

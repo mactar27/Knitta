@@ -85,7 +85,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (dbOrders) {
           const formattedOrders = dbOrders.map((o: any) => ({
             ...o,
-            items: [] // Order items relation not fully modeled yet
+            items: o.items ? o.items.map((i: any) => ({ product: { ...i.product, images: Array.isArray(i.product.images) ? i.product.images : JSON.parse(i.product.images || '[]'), details: Array.isArray(i.product.details) ? i.product.details : JSON.parse(i.product.details || '[]') } })) : []
           }));
           setOrders(formattedOrders as unknown as Order[]);
         }
@@ -216,6 +216,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       date: new Date().toISOString().split("T")[0],
       status: "Pending",
       total,
+      items: cart.map(item => ({ productId: item.product.id, quantity: 1 })),
     };
 
     const res = await placeOrderAction(newOrderData);

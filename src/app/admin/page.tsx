@@ -16,7 +16,9 @@ import {
   DollarSign,
   Package,
   AlertCircle,
-  Edit
+  Edit,
+  Eye,
+  X
 } from "lucide-react";
 import { useShop, Order } from "@/context/ShopContext";
 import { Product, CATEGORIES, BRANDS, SIZES, CONDITIONS, TARGETS } from "@/data/initialData";
@@ -54,6 +56,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [viewOrder, setViewOrder] = useState<Order | null>(null);
 
   // New Product form state
   const [newProduct, setNewProduct] = useState({
@@ -734,6 +737,7 @@ export default function AdminPage() {
                         <th className="p-4 font-bold">Items Count</th>
                         <th className="p-4 font-bold">Price Paid</th>
                         <th className="p-4 font-bold">Shipping Status</th>
+                        <th className="p-4 font-bold text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-sand-100">
@@ -759,6 +763,15 @@ export default function AdminPage() {
                               <option value="Shipped">Shipped</option>
                               <option value="Delivered">Delivered</option>
                             </select>
+                          </td>
+                          <td className="p-4 text-center">
+                            <button
+                              onClick={() => setViewOrder(ord)}
+                              className="p-1 text-charcoal-400 hover:text-charcoal-900 transition-colors"
+                              title="Voir les détails"
+                            >
+                              <Eye className="w-4.5 h-4.5" />
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -809,6 +822,103 @@ export default function AdminPage() {
 
       </div>
       </> )} {/* end isAuthenticated ternary */}
+
+      {/* Order Details Modal */}
+      <AnimatePresence>
+        {viewOrder && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="relative w-full max-w-2xl bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col max-h-[90vh]"
+            >
+              <div className="flex items-center justify-between border-b border-sand-100 px-6 py-4 bg-sand-50">
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-charcoal-900">Détails de la commande</h3>
+                  <p className="text-[10px] text-charcoal-400 font-mono mt-0.5">{viewOrder.id}</p>
+                </div>
+                <button
+                  onClick={() => setViewOrder(null)}
+                  className="p-2 text-charcoal-400 hover:text-charcoal-900 transition-colors rounded-full hover:bg-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                {/* Customer Info */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-2">Client</h4>
+                    <p className="text-sm font-semibold text-charcoal-900">{viewOrder.customerName}</p>
+                    <p className="text-xs text-charcoal-600 mt-1">{viewOrder.customerPhone}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-2">Adresse de livraison</h4>
+                    <p className="text-sm text-charcoal-900 whitespace-pre-line leading-relaxed">{viewOrder.address || viewOrder.customerAddr}</p>
+                  </div>
+                </div>
+
+                {/* Order Meta */}
+                <div className="flex items-center justify-between py-4 border-y border-sand-100">
+                  <div>
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-1">Date</h4>
+                    <p className="text-sm font-medium text-charcoal-900">{viewOrder.date}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-1">Statut</h4>
+                    <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-sand-100 text-charcoal-800">
+                      {viewOrder.status}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-1">Total</h4>
+                    <p className="text-lg font-bold text-charcoal-900">{viewOrder.total} FCFA</p>
+                  </div>
+                </div>
+
+                {/* Items */}
+                <div>
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider text-charcoal-400 mb-4">Articles ({viewOrder.items?.length || 0})</h4>
+                  <div className="space-y-3">
+                    {viewOrder.items && viewOrder.items.length > 0 ? (
+                      viewOrder.items.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-4 bg-sand-50/50 p-3 rounded-sm border border-sand-100">
+                          <div className="relative w-16 h-20 bg-sand-100 rounded-xs overflow-hidden shrink-0">
+                            {item.product?.images?.[0] ? (
+                              <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <Shirt className="w-6 h-6 text-sand-300" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className="text-[9px] font-bold text-terracotta-600 uppercase tracking-wider block mb-0.5">{item.product?.brand || "Inconnu"}</span>
+                            <h5 className="text-sm font-semibold text-charcoal-900 truncate">{item.product?.name || "Article indisponible"}</h5>
+                            <p className="text-xs text-charcoal-500 mt-1">Taille: {item.product?.size || "-"}</p>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <p className="text-sm font-bold text-charcoal-900">{item.product?.price || 0} FCFA</p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-xs text-charcoal-500 italic">Aucun détail d'article disponible pour cette commande (ancienne version).</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
