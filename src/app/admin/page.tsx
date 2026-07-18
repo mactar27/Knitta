@@ -26,20 +26,18 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminPage() {
   // --- ADMIN LOGIN GATE ---
-  const ADMIN_EMAIL = "bintaandoy@gmail.com";
   const ADMIN_PASSWORD = "Ma12344321";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (loginEmail.trim() === ADMIN_EMAIL && loginPassword === ADMIN_PASSWORD) {
+    if (loginPassword === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       setLoginError("");
     } else {
-      setLoginError("Identifiants incorrects. Veuillez réessayer.");
+      setLoginError("Mot de passe incorrect. Veuillez réessayer.");
     }
   };
 
@@ -244,17 +242,7 @@ export default function AdminPage() {
             </div>
 
             <form onSubmit={handleAdminLogin} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800">Adresse e-mail</label>
-                <input
-                  type="email"
-                  required
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  placeholder="votre@email.com"
-                  className="w-full rounded-sm border border-sand-200 bg-[#FCFAF7] px-3.5 py-2.5 text-xs text-charcoal-950 focus:border-terracotta-600 focus:outline-none"
-                />
-              </div>
+
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800">Mot de passe</label>
                 <input
