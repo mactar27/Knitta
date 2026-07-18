@@ -16,6 +16,7 @@ export interface Order {
   customerName: string;
   customerPhone: string;
   address: string;
+  customerAddr?: string;
   city: string;
   zipCode: string;
   status: "Pending" | "Shipped" | "Delivered";
