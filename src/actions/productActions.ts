@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { INITIAL_PRODUCTS } from "@/data/initialData";
 
 // Type based on Prisma schema
 type ProductData = {
@@ -22,9 +23,38 @@ type ProductData = {
 
 export async function getProducts() {
   try {
-    const products = await prisma.product.findMany({
+    let products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
     });
+
+    if (products.length === 0) {
+      // Seed database with INITIAL_PRODUCTS
+      console.log("Database is empty, seeding INITIAL_PRODUCTS...");
+      for (const p of INITIAL_PRODUCTS) {
+        await prisma.product.create({
+          data: {
+            id: p.id,
+            name: p.name,
+            description: p.description,
+            price: p.price,
+            category: p.category,
+            size: p.size,
+            brand: p.brand,
+            condition: p.condition,
+            inStock: p.inStock,
+            isNewArrival: p.isNewArrival,
+            isBestSeller: p.isBestSeller,
+            target: p.target,
+            images: p.images,
+            details: p.details,
+          }
+        });
+      }
+      products = await prisma.product.findMany({
+        orderBy: { createdAt: "desc" },
+      });
+    }
+
     return products;
   } catch (error) {
     console.error("Error fetching products:", error);
