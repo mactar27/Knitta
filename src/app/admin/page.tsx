@@ -588,56 +588,12 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      {/* measurements specs details */}
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 border border-sand-100 rounded-sm bg-sand-50">
-                        <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase text-[10px]">Largeur Poitrine</label>
-                          <input
-                            type="text"
-                            value={newProduct.chest}
-                            onChange={(e) => setNewProduct({ ...newProduct, chest: e.target.value })}
-                            placeholder="22 in"
-                            className="w-full border border-sand-200 bg-white p-2 rounded-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase text-[10px]">Longueur</label>
-                          <input
-                            type="text"
-                            value={newProduct.length}
-                            onChange={(e) => setNewProduct({ ...newProduct, length: e.target.value })}
-                            placeholder="27 in"
-                            className="w-full border border-sand-200 bg-white p-2 rounded-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase text-[10px]">Manches</label>
-                          <input
-                            type="text"
-                            value={newProduct.sleeves}
-                            onChange={(e) => setNewProduct({ ...newProduct, sleeves: e.target.value })}
-                            placeholder="25 in"
-                            className="w-full border border-sand-200 bg-white p-2 rounded-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <label className="font-bold text-charcoal-800 uppercase text-[10px]">Origine</label>
-                          <input
-                            type="text"
-                            value={newProduct.origin}
-                            onChange={(e) => setNewProduct({ ...newProduct, origin: e.target.value })}
-                            placeholder="Fabriqué aux États-Unis"
-                            className="w-full border border-sand-200 bg-white p-2 rounded-xs"
-                          />
-                        </div>
-                      </div>
-
                       <button
                         type="submit"
                         disabled={isSubmitting}
                         className="w-full rounded-sm bg-charcoal-900 py-3 text-xs font-bold uppercase tracking-widest text-white hover:bg-terracotta-600 transition-colors shadow-2xs disabled:bg-charcoal-400"
                       >
-                        {isSubmitting ? "Enregistrement en cours..." : "Publish Garment to Catalog"}
+                        {isSubmitting ? "Enregistrement en cours..." : "Ajouter au catalogue"}
                       </button>
 
                       {formSuccess && (
