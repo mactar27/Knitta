@@ -40,7 +40,7 @@ export default function BestSellersPage() {
           <span className="text-xs uppercase font-bold tracking-widest text-gold-600">Pépites très convoitées</span>
           <h1 className="font-serif text-4xl font-bold text-charcoal-900">Tendances & Meilleures Ventes</h1>
           <p className="text-xs text-charcoal-400 uppercase tracking-widest max-w-md mx-auto leading-relaxed">
-            Nos pièces incontournables plébiscitées par la communauté. Des créations crochetées main aux indispensables de la beauté.
+            Nos pièces incontournables plébiscitées par la communauté. Des pépites vintage aux indispensables du streetwear.
           </p>
         </div>
       </section>

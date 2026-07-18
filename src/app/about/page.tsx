@@ -19,7 +19,7 @@ export default function AboutPage() {
           <span className="text-xs uppercase font-bold tracking-widest text-terracotta-600">Notre Histoire</span>
           <h1 className="font-serif text-4xl sm:text-5xl font-light text-charcoal-900 leading-tight">
             Sélection Mode &<br />
-            <span className="italic font-medium text-charcoal-700">Beauté Authentique.</span>
+            <span className="italic font-medium text-charcoal-700">Streetwear Authentique.</span>
           </h1>
           <p className="text-xs text-charcoal-400 uppercase tracking-widest">Une marque versatile conçue à Dakar, Sénégal</p>
         </div>
@@ -33,10 +33,10 @@ export default function AboutPage() {
           <div className="md:col-span-6 space-y-6">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-charcoal-900">Pourquoi KnittaCorner ?</h2>
             <p className="text-sm text-charcoal-500 leading-relaxed font-light">
-              Fondée par Binta, <strong className="text-charcoal-900">KnittaCorner</strong> est née de la passion pour la mode, le streetwear et la beauté. Notre concept hybride &laquo; Versatile brand &raquo; vise à proposer sous un même toit des pièces uniques de mode (streetwear, vintage, seconde main) et des cosmétiques tendance rigoureusement sélectionnés.
+              Fondée par Binta, <strong className="text-charcoal-900">KnittaCorner</strong> est née de la passion pour la mode, le streetwear et la culture vintage. Notre concept vise à proposer sous un même toit des pièces uniques de mode (streetwear, vintage, seconde main) rigoureusement sélectionnées.
             </p>
             <p className="text-sm text-charcoal-500 leading-relaxed font-light">
-              Chaque vêtement et accessoire est sélectionné avec le plus grand soin pour son style et sa qualité. Nous sélectionnons parallèlement des marques de cosmétiques (comme Kiss Beauty, Revolution Makeup, Beauty Treats) pour leur qualité et leur adéquation avec les peaux de nos clientes, afin de vous offrir des produits fiables et éclatants.
+              Chaque vêtement et accessoire est sélectionné avec le plus grand soin pour son style et sa qualité. Nous sélectionnons des pièces authentiques pour leur qualité et leur adéquation avec la culture streetwear urbaine, afin de vous offrir un style pointu et unique.
             </p>
           </div>
           <div className="md:col-span-6 relative aspect-video md:aspect-[4/3] rounded-xs overflow-hidden bg-sand-50 border border-sand-100">
@@ -68,8 +68,8 @@ export default function AboutPage() {
               },
               {
                 step: "02",
-                name: "Cosmétiques Authentiques",
-                desc: "Tous nos gloss, mascaras et sprays fixateurs proviennent de distributeurs officiels et sont livrés neufs sous emballage scellé."
+                name: "Pièces Authentiques",
+                desc: "Tous nos vêtements et sneakers proviennent de sources fiables et sont vérifiés pour garantir leur authenticité."
               },
               {
                 step: "03",
@@ -95,7 +95,7 @@ export default function AboutPage() {
         <div className="text-center space-y-6 max-w-lg mx-auto py-10">
           <h2 className="font-serif text-3xl font-bold text-charcoal-900">Découvrez l&apos;Univers KnittaCorner</h2>
           <p className="text-xs text-charcoal-400 leading-relaxed">
-            Trouvez la pièce de mode parfaite et les essentiels de votre rituel beauté quotidien.
+            Trouvez la pièce de mode parfaite et les essentiels de votre garde-robe urbaine.
           </p>
           <div>
             <Link

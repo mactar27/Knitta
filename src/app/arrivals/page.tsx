@@ -40,7 +40,7 @@ export default function NewArrivalsPage() {
           <span className="text-xs uppercase font-bold tracking-widest text-terracotta-600">Catalogue Hebdomadaire</span>
           <h1 className="font-serif text-4xl font-bold text-charcoal-900">Derniers Arrivages : Nouveautés</h1>
           <p className="text-xs text-charcoal-400 uppercase tracking-widest max-w-md mx-auto leading-relaxed">
-            Découvrez nos derniers arrivages de pièces streetwear et notre sélection cosmétique fraîchement débarquée.
+            Découvrez nos derniers arrivages de pièces streetwear et nos nouveautés mode fraîchement débarquées.
           </p>
         </div>
       </section>

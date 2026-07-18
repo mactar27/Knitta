@@ -17,7 +17,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "KnittaCorner | Un Univers Mode & Streetwear",
-  description: "Plongez dans l'univers de KnittaCorner : une sélection pointue de vêtements streetwear, pièces uniques de seconde main, accessoires tendance et cosmétiques.",
+  description: "Plongez dans l'univers de KnittaCorner : une sélection pointue de vêtements streetwear, pièces uniques de seconde main, accessoires tendance et sneakers.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

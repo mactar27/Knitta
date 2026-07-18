@@ -27,10 +27,10 @@ export default function Home() {
       href: "/shop?category=V%C3%AAtements+%26+Streetwear"
     },
     {
-      title: "Beauté & Cosmétique",
-      description: "Gloss repulpants, mascaras volume et sprays fixateurs teint",
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&auto=format&fit=crop&q=80",
-      href: "/shop?category=Beaut%C3%A9+%26+Cosm%C3%A9tique"
+      title: "Archives & Vintage",
+      description: "Des trésors vintage et des pièces d'archives uniques",
+      image: "https://images.unsplash.com/photo-1550614000-4b95d466f28b?w=800&auto=format&fit=crop&q=80",
+      href: "/shop?category=Archives+%26+Vintage"
     },
     {
       title: "Accessoires & Sneakers",
@@ -49,8 +49,8 @@ export default function Home() {
     },
     {
       num: "02",
-      title: "Sélection Beauté",
-      description: "Choix minutieux des marques de cosmétiques (tenue, texture, avis)."
+      title: "Sélection Pointue",
+      description: "Choix minutieux de pièces mode rares (matière, coupe, état)."
     },
     {
       num: "03",
@@ -73,7 +73,7 @@ export default function Home() {
       rating: 5
     },
     {
-      quote: "Ravi de mon spray de fixation Revolution Base Fix et du gloss Beauty Treats. Des produits de maquillage authentiques et de super qualité.",
+      quote: "Une sélection dingue ! J'ai pu dénicher une veste vintage introuvable ailleurs, la qualité est impeccable.",
       author: "Awa N.",
       role: "Dakar",
       rating: 5
@@ -93,24 +93,24 @@ export default function Home() {
       alt: "Mules Cozy"
     },
     {
-      src: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&auto=format&fit=crop&q=80", // cosmetics set
-      alt: "Coffret Mascara"
+      src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80", // fashion item
+      alt: "Pièce Mode"
     },
     {
       src: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=600&auto=format&fit=crop&q=80", // setting spray
       alt: "Revolution Fixing Spray"
     },
     {
-      src: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=600&auto=format&fit=crop&q=80", // lip gloss
-      alt: "Gloss Beauty Treats"
+      src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&auto=format&fit=crop&q=80", // fashion item
+      alt: "Accessoire Mode"
     },
     {
       src: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&auto=format&fit=crop&q=80", // streetwear
       alt: "Pièce Streetwear"
     },
     {
-      src: "https://images.unsplash.com/photo-1617224908553-ee2702b0c68a?w=600&auto=format&fit=crop&q=80", // crown lipstick
-      alt: "Matte Lipgloss Couronne"
+      src: "https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=600&auto=format&fit=crop&q=80", // another fashion item
+      alt: "Pièce Designer"
     }
   ];
 
@@ -178,8 +178,8 @@ export default function Home() {
                 <Sparkles className="h-5 w-5" />
               </div>
               <div className="space-y-0.5">
-                <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Beauté Originale</h4>
-                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Cosmétiques de marque 100% authentiques.</p>
+                <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Authenticité</h4>
+                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Pièces de créateurs 100% authentiques.</p>
               </div>
             </div>
 
@@ -199,7 +199,7 @@ export default function Home() {
               </div>
               <div className="space-y-0.5">
                 <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Versatile Brand</h4>
-                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Associer mode streetwear & cosmétiques tendances.</p>
+                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Une curation mode streetwear d'exception.</p>
               </div>
             </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
               </div>
               
               <p className="text-xs text-charcoal-450 leading-relaxed font-light">
-                Découvrez nos derniers arrivages de streetwear, accessoires et cosmétiques à Dakar. Des pièces souvent uniques !
+                Découvrez nos derniers arrivages de pièces streetwear rares, d'accessoires et de sneakers à Dakar. Des pièces souvent uniques !
               </p>
 
               <Link
@@ -270,7 +270,7 @@ export default function Home() {
             <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-terracotta-600 block">Notre Curation</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold">Notre processus de création</h2>
             <p className="text-xs text-charcoal-500 font-light leading-relaxed">
-              De la sélection minutieuse de pièces streetwear de qualité au choix rigoureux de cosmétiques de marque authentiques.
+              De la sélection minutieuse de pièces streetwear de qualité au choix rigoureux d'accessoires rares et pointus.
             </p>
           </div>
 
@@ -295,7 +295,7 @@ export default function Home() {
             <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-terracotta-600 block">À Propos de KC</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 leading-tight">Plus qu&apos;une marque, une passion.</h2>
             <p className="text-xs text-charcoal-450 leading-relaxed font-light">
-              KnittaCorner est un concept store basé à Dakar, Sénégal. Fondé par Binta, notre univers associe une curation pointue de vêtements streetwear, des pièces d&apos;exception et une sélection de cosmétiques tendance. Chaque article est choisi pour affirmer votre style au quotidien.
+              KnittaCorner est un concept store basé à Dakar, Sénégal. Fondé par Binta, notre univers associe une curation pointue de vêtements streetwear, des pièces d&apos;exception et une sélection de sneakers et accessoires tendance. Chaque article est choisi pour affirmer votre style au quotidien.
             </p>
             <Link
               href="/about"
@@ -317,8 +317,8 @@ export default function Home() {
             </div>
             <div className="relative aspect-square w-full overflow-hidden rounded-xs border border-sand-100 bg-sand-50">
               <Image
-                src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&auto=format&fit=crop&q=80"
-                alt="Cosmétiques et gloss beauté"
+                src="https://images.unsplash.com/photo-1550614000-4b95d466f28b?w=500&auto=format&fit=crop&q=80"
+                alt="Sélection Vintage"
                 fill
                 className="object-cover hover:scale-103 transition-transform duration-500"
               />
@@ -333,8 +333,8 @@ export default function Home() {
             </div>
             <div className="relative aspect-square w-full overflow-hidden rounded-xs border border-sand-100 bg-sand-50">
               <Image
-                src="https://images.unsplash.com/photo-1617224908553-ee2702b0c68a?w=500&auto=format&fit=crop&q=80"
-                alt="Rouges à lèvres couronne"
+                src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=80"
+                alt="Accessoires Streetwear"
                 fill
                 className="object-cover hover:scale-103 transition-transform duration-500"
               />
@@ -400,7 +400,7 @@ export default function Home() {
               <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-terracotta-600 block">Newsletter</span>
               <h2 className="font-serif text-3xl font-bold text-charcoal-900">Ne manquez aucun arrivage</h2>
               <p className="text-xs text-charcoal-550 leading-relaxed font-light max-w-md">
-                Inscrivez-vous pour recevoir les aperçus exclusifs de nos prochains drops de créations et cosmétiques avant leur mise en ligne.
+                Inscrivez-vous pour recevoir les aperçus exclusifs de nos prochains drops mode avant leur mise en ligne.
               </p>
             </div>
 

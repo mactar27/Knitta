@@ -59,9 +59,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Coffret Mascara Double The Drama",
     description: "Pack exclusif Kiss Beauty contenant deux mascaras professionnels. Apporte un volume spectaculaire et allonge vos cils dès le premier passage. Tenue longue durée de 24h sans paquet et résistante à l'eau.",
     price: 15,
-    category: "Beauté & Cosmétique",
+    category: "Archives & Vintage",
     size: "Taille Unique",
-    brand: "Kiss Beauty",
+    brand: "Vintage",
     condition: "Neuf",
     images: [
       "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&auto=format&fit=crop&q=80"
@@ -86,9 +86,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Revolution Base Fix Spray Fixateur",
     description: "Le spray fixateur de teint Revolution Base Fix offre une tenue extrême à votre maquillage sous le climat chaud de Dakar. Fixation hydratante, matifiante et imperméable pour conserver un fini parfait du matin au soir.",
     price: 18,
-    category: "Beauté & Cosmétique",
+    category: "Archives & Vintage",
     size: "Taille Unique",
-    brand: "Revolution Makeup",
+    brand: "Streetwear",
     condition: "Neuf",
     images: [
       "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=800&auto=format&fit=crop&q=80"
@@ -113,9 +113,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Trio de Gloss Scintillants Beauty Treats",
     description: "Un lot de trois gloss repulpants scintillants aux reflets chauds et scintillants dorés. Apporte une hydratation instantanée à vos lèvres grâce à une formule enrichie en vitamines et huiles naturelles.",
     price: 12,
-    category: "Beauté & Cosmétique",
+    category: "Archives & Vintage",
     size: "Taille Unique",
-    brand: "Beauty Treats",
+    brand: "Designer",
     condition: "Neuf",
     images: [
       "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80"
@@ -138,7 +138,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Sac Cabas Orange Crocheté Main",
     description: "Sac à bandoulière d'été, idéal pour le quotidien. Crocheté entièrement à la main par Binta dans notre atelier de Dakar. Sa couleur orange vif apporte du dynamisme et sa maille ajourée assure un style bohème moderne unique.",
     price: 25,
-    category: "Crochet & Fait Main",
+    category: "Vêtements & Streetwear",
     size: "M",
     brand: "KnittaCorner",
     condition: "Fait main",
@@ -165,7 +165,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Sac Cordon Crochet aux Couleurs Palestiniennes",
     description: "Sac seau crocheté à la main, arborant les bandes symboliques verte, blanche, noire et rouge. Fermeture à cordon solide avec pompons et bandoulière en maille renforcée pour plus de durabilité.",
     price: 30,
-    category: "Crochet & Fait Main",
+    category: "Vêtements & Streetwear",
     size: "M",
     brand: "KnittaCorner",
     condition: "Fait main",
@@ -190,9 +190,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Lingettes Démaquillantes Collagène",
     description: "Lot de deux paquets de lingettes démaquillantes et nettoyantes Kiss Beauty. Formulées pour retirer en douceur le maquillage waterproof le plus résistant sans irriter les yeux ni assécher la peau.",
     price: 8,
-    category: "Beauté & Cosmétique",
+    category: "Archives & Vintage",
     size: "Taille Unique",
-    brand: "Kiss Beauty",
+    brand: "Vintage",
     condition: "Neuf",
     images: [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80"
@@ -215,7 +215,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Bob d&apos;été Crochet Multicolore",
     description: "Bob crocheté main en fil de coton premium aux couleurs estivales contrastées. Protège avec élégance des rayons du soleil tout en complétant vos tenues d'une touche bohème et originale.",
     price: 22,
-    category: "Crochet & Fait Main",
+    category: "Vêtements & Streetwear",
     size: "L",
     brand: "KnittaCorner",
     condition: "Fait main",
@@ -240,9 +240,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Rouges à Lèvres Mat Luxe Couronne (Set)",
     description: "Un ensemble de trois gloss mats liquides longue tenue Kiss Beauty. Présentés dans des flacons aux capuchons dorés sculptés en couronne royale. Fini mat velours intense qui reste confortable et ne file pas.",
     price: 14,
-    category: "Beauté & Cosmétique",
+    category: "Archives & Vintage",
     size: "Taille Unique",
-    brand: "Kiss Beauty",
+    brand: "Vintage",
     condition: "Neuf",
     images: [
       "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&auto=format&fit=crop&q=80"
@@ -262,8 +262,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   }
 ];
 
-export const CATEGORIES = ["Tout", "Vêtements & Streetwear", "Beauté & Cosmétique", "Accessoires & Sneakers"];
-export const BRANDS = ["Tout", "KnittaCorner", "Kiss Beauty", "Revolution Makeup", "Beauty Treats", "Autre"];
+export const CATEGORIES = ["Tout", "Vêtements & Streetwear", "Archives & Vintage", "Accessoires & Sneakers"];
+export const BRANDS = ["Tout", "KnittaCorner", "Vintage", "Streetwear", "Designer", "Autre"];
 export const SIZES = [
   "Tout",
   "Taille Unique",

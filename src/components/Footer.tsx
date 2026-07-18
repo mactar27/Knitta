@@ -38,10 +38,10 @@ export const Footer = () => {
               />
             </div>
             <p className="text-xs text-charcoal-400 leading-relaxed font-light">
-              Créations uniques. Beauté & Style.
+              Créations uniques. Mode & Style.
             </p>
             <p className="text-xs text-charcoal-400 leading-relaxed font-light max-w-xs">
-              Pièces streetwear pointues et cosmétiques tendance sélectionnés pour révéler votre personnalité.
+              Pièces streetwear pointues et accessoires tendance sélectionnés pour révéler votre personnalité.
             </p>
           </div>
 
