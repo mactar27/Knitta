@@ -65,7 +65,7 @@ export default function AdminPage() {
     category: "Vestes",
     size: "M",
     brand: "Indépendant",
-    condition: "Excellent état" as "Excellent état" | "Très bon état" | "Bon état" | "Usure naturelle",
+    condition: "Bon état" as "Très bon état" | "Bon état" | "Usure naturelle",
     target: "Unisexe" as "Homme" | "Femme" | "Enfant" | "Unisexe",
     image1: "",
     image2: "",
@@ -170,7 +170,7 @@ export default function AdminPage() {
         category: "Vestes",
         size: "M",
         brand: "Indépendant",
-        condition: "Excellent état",
+        condition: "Bon état",
         target: "Unisexe",
         image1: "",
         image2: "",
@@ -535,7 +535,7 @@ export default function AdminPage() {
                           <label className="font-bold text-charcoal-800 uppercase">État</label>
                           <select
                             value={newProduct.condition}
-                            onChange={(e) => setNewProduct({ ...newProduct, condition: e.target.value as "Excellent état" | "Très bon état" | "Bon état" | "Usure naturelle" })}
+                            onChange={(e) => setNewProduct({ ...newProduct, condition: e.target.value as "Très bon état" | "Bon état" | "Usure naturelle" })}
                             className="w-full border border-sand-200 bg-[#FCFAF7] p-2 rounded-xs cursor-pointer"
                           >
                             {CONDITIONS.filter((k) => k !== "Tout").map((k) => (

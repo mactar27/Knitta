@@ -14,7 +14,7 @@ export interface Product {
   category: string;
   size: string;
   brand: string;
-  condition: "Excellent état" | "Très bon état" | "Bon état" | "Usure naturelle" | "Neuf" | "Fait main";
+  condition: "Très bon état" | "Bon état" | "Usure naturelle" | "Neuf" | "Fait main";
   images: string[];
   inStock: boolean;
   isNewArrival: boolean;
@@ -271,5 +271,5 @@ export const SIZES = [
   "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45",
   "36-37", "38-39", "40-41", "42-43"
 ];
-export const CONDITIONS = ["Tout", "Neuf", "Fait main", "Excellent état"];
+export const CONDITIONS = ["Tout", "Neuf", "Fait main", "Très bon état", "Bon état", "Usure naturelle"];
 export const TARGETS = ["Tout", "Femme", "Homme", "Enfant", "Unisexe"];

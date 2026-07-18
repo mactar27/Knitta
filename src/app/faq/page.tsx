@@ -25,7 +25,7 @@ const FAQ_SECTIONS: Record<string, FAQItem[]> = {
   "État & Qualité": [
     {
       question: "À quoi correspondent les différents états indiqués ?",
-      answer: "Nous utilisons une charte d'évaluation rigoureuse :\n\n• Excellent état : Zéro défaut, aspect proche du neuf, très légères traces de port.\n• Très bon état : Légère patine d'usage, aucun trou ni tache.\n• Bon état : Patine naturelle d'usage, légère décoloration ou usure esthétique mineure qui fait le charme du vintage.\n• Usure naturelle : Usure vintage marquée et visible (ex. petites décolorations ou légères imperfections), toutes indiquées en photo."
+      answer: "Nous utilisons une charte d'évaluation rigoureuse :\n\n• Très bon état : Zéro défaut, aspect proche du neuf, très légères traces de port.\n• Bon état : Patine naturelle d'usage, légère décoloration ou usure esthétique mineure qui fait le charme du vintage.\n• Usure naturelle : Usure vintage marquée et visible (ex. petites décolorations ou légères imperfections), toutes indiquées en photo."
     },
     {
       question: "Les vêtements sont-ils lavés avant expédition ?",

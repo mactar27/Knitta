@@ -63,8 +63,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
   };
 
   const conditionDescriptions: Record<string, string> = {
-    "Excellent état": "Article vintage impeccable. Aucun signe d'usure notable, tache, trou ou retouche. État comme neuf.",
-    "Très bon état": "Léger signe d'usure vintage, pouvant inclure une légère décoloration ou boulochage. Aucun défaut structurel.",
+    "Très bon état": "Article vintage impeccable. Aucun signe d'usure notable, tache, trou ou retouche. État comme neuf.",
     "Bon état": "Présente une usure normale, de légères traces d'utilisation ou décoloration. Ajoute du caractère vintage.",
     "Usure naturelle": "Usure visible ou marques esthétiques mineures (ex. petites taches ou décoloration). Vêtement solide et authentique."
   };
