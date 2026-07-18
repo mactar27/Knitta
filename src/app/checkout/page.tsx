@@ -31,18 +31,20 @@ export default function CheckoutPage() {
   const shippingFee = cartTotal > 150 ? 0 : cart.length > 0 ? 12 : 0;
   const grandTotal = cartTotal + shippingFee;
 
-  const handleCheckoutSubmit = (e: React.FormEvent) => {
+  const handleCheckoutSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
     setLoading(true);
 
-    // Simulate merchant processing delay
-    setTimeout(() => {
-      const order = placeOrder(shippingInfo);
+    try {
+      const order = await placeOrder(shippingInfo);
       setPlacedOrder(order);
+    } catch (error) {
+      console.error("Failed to place order:", error);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   if (placedOrder) {

@@ -2,6 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product, INITIAL_PRODUCTS, Review } from "@/data/initialData";
+import { getProducts, addProductAction, updateProductAction, deleteProductAction } from "@/actions/productActions";
+import { getOrders, placeOrderAction, updateOrderStatusAction } from "@/actions/orderActions";
 
 export interface CartItem {
   product: Product;
@@ -37,11 +39,11 @@ interface ShopContextProps {
   clearCart: () => void;
   toggleWishlist: (productId: string) => void;
   isWishlisted: (productId: string) => boolean;
-  placeOrder: (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => Order;
-  updateOrderStatus: (orderId: string, status: "Pending" | "Shipped" | "Delivered") => void;
-  addProduct: (product: Omit<Product, "id" | "reviews" | "rating" | "inStock">) => void;
-  editProduct: (product: Product) => void;
-  deleteProduct: (productId: string) => void;
+  placeOrder: (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => Promise<Order>;
+  updateOrderStatus: (orderId: string, status: "Pending" | "Shipped" | "Delivered") => Promise<void>;
+  addProduct: (product: Omit<Product, "id" | "reviews" | "rating" | "inStock">) => Promise<void>;
+  editProduct: (product: Product) => Promise<void>;
+  deleteProduct: (productId: string) => Promise<void>;
   login: (email: string) => boolean;
   register: (name: string, email: string) => boolean;
   logout: () => void;
@@ -60,22 +62,48 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Hydration-safe initial state loading
   useEffect(() => {
-    try {
-      const storedProducts = localStorage.getItem("kc_products");
-      const storedCart = localStorage.getItem("kc_cart");
-      const storedWishlist = localStorage.getItem("kc_wishlist");
-      const storedOrders = localStorage.getItem("kc_orders");
-      const storedUser = localStorage.getItem("kc_user");
+    const fetchInitialData = async () => {
+      try {
+        const [dbProducts, dbOrders] = await Promise.all([
+          getProducts(),
+          getOrders()
+        ]);
+        
+        // Use DB products if available, otherwise fallback to INITIAL_PRODUCTS
+        if (dbProducts && dbProducts.length > 0) {
+          // Cast dbProducts to any since Prisma types might slightly differ from frontend Product type
+          // e.g., JSON fields for images/details, Date objects for createdAt
+          const formattedProducts = dbProducts.map((p: any) => ({
+            ...p,
+            images: Array.isArray(p.images) ? p.images : (typeof p.images === 'string' ? JSON.parse(p.images) : p.images?.images || []),
+            details: Array.isArray(p.details) ? p.details : (typeof p.details === 'string' ? JSON.parse(p.details) : p.details?.details || []),
+            reviews: p.reviews || [] // assuming relations might not be fetched, so default to empty
+          }));
+          setProducts(formattedProducts as unknown as Product[]);
+        }
 
-      if (storedProducts) setProducts(JSON.parse(storedProducts));
-      if (storedCart) setCart(JSON.parse(storedCart));
-      if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
-      if (storedOrders) setOrders(JSON.parse(storedOrders));
-      if (storedUser) setCurrentUser(JSON.parse(storedUser));
-    } catch (e) {
-      console.error("Could not load from localStorage:", e);
-    }
-    setIsLoaded(true);
+        if (dbOrders) {
+          const formattedOrders = dbOrders.map((o: any) => ({
+            ...o,
+            items: [] // Order items relation not fully modeled yet
+          }));
+          setOrders(formattedOrders as unknown as Order[]);
+        }
+
+        const storedCart = localStorage.getItem("kc_cart");
+        const storedWishlist = localStorage.getItem("kc_wishlist");
+        const storedUser = localStorage.getItem("kc_user");
+
+        if (storedCart) setCart(JSON.parse(storedCart));
+        if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
+        if (storedUser) setCurrentUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Could not load initial data:", e);
+      }
+      setIsLoaded(true);
+    };
+
+    fetchInitialData();
   }, []);
 
   // Save changes to localStorage whenever state changes
@@ -179,32 +207,35 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Shopper checkout order placement
-  const placeOrder = (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => {
+  const placeOrder = async (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => {
     const total = cart.reduce((sum, item) => sum + item.product.price, 0);
-    const newOrder: Order = {
-      id: "ord-" + Math.floor(100000 + Math.random() * 900000),
-      items: [...cart],
-      total,
+    const newOrderData = {
       customerName: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
       customerPhone: shippingInfo.phone,
-      address: shippingInfo.address,
-      city: "Dakar",
-      zipCode: "",
+      customerAddr: shippingInfo.address,
+      date: new Date().toISOString().split("T")[0],
       status: "Pending",
-      date: new Date().toISOString().split("T")[0]
+      total,
     };
 
-    // 1-of-1 clothing inventory model: mark all purchased products as out of stock
-    const cartIds = cart.map((item) => item.product.id);
-    setProducts((prevProducts) =>
-      prevProducts.map((p) => (cartIds.includes(p.id) ? { ...p, inStock: false } : p))
-    );
+    const res = await placeOrderAction(newOrderData);
 
-    // Record order
-    setOrders((prev) => [newOrder, ...prev]);
-    // Clear shopper cart
-    setCart([]);
-    return newOrder;
+    if (res.success && res.order) {
+      // Record order
+      const formattedOrder: Order = {
+        ...res.order,
+        items: [...cart],
+        address: res.order.customerAddr,
+        city: "Dakar",
+        zipCode: "",
+      } as any;
+      setOrders((prev) => [formattedOrder, ...prev]);
+
+      // Clear shopper cart
+      setCart([]);
+      return formattedOrder;
+    }
+    throw new Error("Failed to place order");
   };
 
   // Review Operations
@@ -234,32 +265,73 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Administrative actions
-  const updateOrderStatus = (orderId: string, status: "Pending" | "Shipped" | "Delivered") => {
-    setOrders((prev) =>
-      prev.map((ord) => (ord.id === orderId ? { ...ord, status } : ord))
-    );
+  const updateOrderStatus = async (orderId: string, status: "Pending" | "Shipped" | "Delivered") => {
+    const res = await updateOrderStatusAction(orderId, status);
+    if (res.success) {
+      setOrders((prev) =>
+        prev.map((ord) => (ord.id === orderId ? { ...ord, status } : ord))
+      );
+    }
   };
 
-  const addProduct = (pInfo: Omit<Product, "id" | "reviews" | "rating" | "inStock">) => {
-    const newProduct: Product = {
-      ...pInfo,
-      id: "p-" + Math.floor(100000 + Math.random() * 900000),
-      reviews: [],
-      rating: 5.0,
-      inStock: true
-    };
-    setProducts((prev) => [newProduct, ...prev]);
+  const addProduct = async (pInfo: Omit<Product, "id" | "reviews" | "rating" | "inStock">) => {
+    const res = await addProductAction({
+      name: pInfo.name,
+      description: pInfo.description,
+      price: pInfo.price,
+      category: pInfo.category,
+      size: pInfo.size,
+      brand: pInfo.brand,
+      condition: pInfo.condition,
+      target: pInfo.target,
+      images: pInfo.images,
+      details: pInfo.details,
+      isNewArrival: pInfo.isNewArrival,
+      isBestSeller: pInfo.isBestSeller,
+      inStock: true,
+    });
+
+    if (res.success && res.product) {
+      const newProduct: Product = {
+        ...res.product,
+        images: Array.isArray(res.product.images) ? res.product.images : JSON.parse(res.product.images as string),
+        details: Array.isArray(res.product.details) ? res.product.details : JSON.parse(res.product.details as string),
+        reviews: [],
+      } as any;
+      setProducts((prev) => [newProduct, ...prev]);
+    }
   };
 
-  const editProduct = (updatedProduct: Product) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-    );
+  const editProduct = async (updatedProduct: Product) => {
+    const res = await updateProductAction(updatedProduct.id, {
+      name: updatedProduct.name,
+      description: updatedProduct.description,
+      price: updatedProduct.price,
+      category: updatedProduct.category,
+      size: updatedProduct.size,
+      brand: updatedProduct.brand,
+      condition: updatedProduct.condition,
+      target: updatedProduct.target,
+      images: updatedProduct.images,
+      details: updatedProduct.details,
+      isNewArrival: updatedProduct.isNewArrival,
+      isBestSeller: updatedProduct.isBestSeller,
+      inStock: updatedProduct.inStock,
+    });
+
+    if (res.success) {
+      setProducts((prev) =>
+        prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+      );
+    }
   };
 
-  const deleteProduct = (productId: string) => {
-    setProducts((prev) => prev.filter((p) => p.id !== productId));
-    setCart((prev) => prev.filter((item) => item.product.id !== productId));
+  const deleteProduct = async (productId: string) => {
+    const res = await deleteProductAction(productId);
+    if (res.success) {
+      setProducts((prev) => prev.filter((p) => p.id !== productId));
+      setCart((prev) => prev.filter((item) => item.product.id !== productId));
+    }
   };
 
   return (
