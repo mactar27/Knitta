@@ -18,11 +18,6 @@ export default function CheckoutPage() {
     phone: "",
     address: ""
   });
-  const [cardInfo, setCardInfo] = useState({
-    num: "",
-    exp: "",
-    cvc: ""
-  });
 
   const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
@@ -206,53 +201,11 @@ export default function CheckoutPage() {
               {/* Payment Details card */}
               <div className="bg-white border border-sand-100 rounded-sm p-6 sm:p-8 space-y-4 shadow-3xs">
                 <h2 className="font-serif text-lg font-semibold text-charcoal-900 flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 text-terracotta-600" /> Moyen de paiement factice
+                  <CreditCard className="h-5 w-5 text-terracotta-600" /> Paiement à la livraison
                 </h2>
 
-                <div className="p-3 bg-sand-50 border border-sand-100 text-[10px] text-charcoal-500 rounded-sm">
-                  <strong>Remarque :</strong> Ceci est une boutique de démonstration. Veuillez utiliser des coordonnées de carte de test pour valider votre commande.
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="space-y-1.5 sm:col-span-3">
-                    <label htmlFor="card-num" className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800">Numéro de carte *</label>
-                    <input
-                      id="card-num"
-                      type="text"
-                      required
-                      value={cardInfo.num}
-                      onChange={(e) => setCardInfo({ ...cardInfo, num: e.target.value })}
-                      placeholder="4242 4242 4242 4242"
-                      className="w-full rounded-sm border border-sand-200 bg-[#FCFAF7] px-3.5 py-2.5 text-xs text-charcoal-950 focus:border-terracotta-600 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5 sm:col-span-2">
-                    <label htmlFor="card-exp" className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800">Date d&apos;expiration (MM/AA) *</label>
-                    <input
-                      id="card-exp"
-                      type="text"
-                      required
-                      value={cardInfo.exp}
-                      onChange={(e) => setCardInfo({ ...cardInfo, exp: e.target.value })}
-                      placeholder="12/29"
-                      className="w-full rounded-sm border border-sand-200 bg-[#FCFAF7] px-3.5 py-2.5 text-xs text-charcoal-950 focus:border-terracotta-600 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="card-cvc" className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800">CVC *</label>
-                    <input
-                      id="card-cvc"
-                      type="password"
-                      required
-                      value={cardInfo.cvc}
-                      onChange={(e) => setCardInfo({ ...cardInfo, cvc: e.target.value })}
-                      placeholder="•••"
-                      maxLength={4}
-                      className="w-full rounded-sm border border-sand-200 bg-[#FCFAF7] px-3.5 py-2.5 text-xs text-charcoal-950 focus:border-terracotta-600 focus:outline-none"
-                    />
-                  </div>
+                <div className="p-4 bg-sand-50 border border-sand-100 text-xs text-charcoal-600 rounded-sm leading-relaxed">
+                  <strong>Paiement sécurisé à la réception :</strong> Vous réglerez votre commande en espèces (ou via Wave/Orange Money) directement au livreur lors de la réception de votre colis.
                 </div>
               </div>
             </div>
