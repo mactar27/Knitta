@@ -105,7 +105,7 @@ function ShopContent() {
             {selectedCategory === "Tout" ? "La Boutique" : `${selectedCategory}`}
           </h1>
           <p className="text-xs text-charcoal-400 uppercase tracking-widest">
-            Créations crochet fait main & cosmétiques ({filteredProducts.length} articles)
+            Pièces streetwear, mode & cosmétiques ({filteredProducts.length} articles)
           </p>
         </div>
       </section>

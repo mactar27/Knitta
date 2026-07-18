@@ -21,10 +21,10 @@ export default function Home() {
   // Categories Editorial Cards
   const collectionsList = [
     {
-      title: "Crochet Fait Main",
-      description: "Sacs cabas, bobs et accessoires crochetés avec amour par Binta",
+      title: "Vêtements & Streetwear",
+      description: "Des pièces de mode uniques et streetwear sélectionnées avec soin.",
       image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80",
-      href: "/shop?category=Crochet+%26+Fait+Main"
+      href: "/shop?category=V%C3%AAtements+%26+Streetwear"
     },
     {
       title: "Beauté & Cosmétique",
@@ -33,10 +33,10 @@ export default function Home() {
       href: "/shop?category=Beaut%C3%A9+%26+Cosm%C3%A9tique"
     },
     {
-      title: "Chaussures & Accessoires",
-      description: "Mules douillettes à plateformes et accessoires de style",
+      title: "Accessoires & Sneakers",
+      description: "Des accessoires tendance et des sneakers rares",
       image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&auto=format&fit=crop&q=80",
-      href: "/shop?category=Accessoires+%26+Chaussures"
+      href: "/shop?category=Accessoires+%26+Sneakers"
     }
   ];
 
@@ -44,8 +44,8 @@ export default function Home() {
   const sourcingSteps = [
     {
       num: "01",
-      title: "Crochet Main",
-      description: "Conception et tricotage de chaque sac ou bob à la main à Dakar."
+      title: "Sélection Mode",
+      description: "Curation rigoureuse de pièces streetwear et vintage à Dakar."
     },
     {
       num: "02",
@@ -55,7 +55,7 @@ export default function Home() {
     {
       num: "03",
       title: "Contrôle Qualité",
-      description: "Vérification minutieuse des packagings et des finitions des mailles."
+      description: "Vérification minutieuse des packagings et de l'état des vêtements."
     },
     {
       num: "04",
@@ -67,7 +67,7 @@ export default function Home() {
   // Testimonials
   const testimonials = [
     {
-      quote: "Le sac cabas en crochet orange est sublime, je ne reçois que des compliments ! Binta fait un travail extraordinaire, la maille est très solide.",
+      quote: "Les pièces streetwear dénichées par Binta sont sublimes, je ne reçois que des compliments ! La sélection est top.",
       author: "Mariama D.",
       role: "Dakar",
       rating: 5
@@ -79,7 +79,7 @@ export default function Home() {
       rating: 5
     },
     {
-      quote: "Les mules fourrées avec bordure crochet sont d'un confort absolu. La livraison a été超 rapide et le colis sentait super bon !",
+      quote: "Les sneakers et accessoires sont dans un état irréprochable. La livraison a été super rapide et le colis était soigné !",
       author: "Khady J.",
       role: "Saint-Louis",
       rating: 5
@@ -105,8 +105,8 @@ export default function Home() {
       alt: "Gloss Beauty Treats"
     },
     {
-      src: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&auto=format&fit=crop&q=80", // orange crochet bag
-      alt: "Sac Crochet Orange"
+      src: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&auto=format&fit=crop&q=80", // streetwear
+      alt: "Pièce Streetwear"
     },
     {
       src: "https://images.unsplash.com/photo-1617224908553-ee2702b0c68a?w=600&auto=format&fit=crop&q=80", // crown lipstick
@@ -168,8 +168,8 @@ export default function Home() {
                 <Shirt className="h-5 w-5" />
               </div>
               <div className="space-y-0.5">
-                <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Fait Main</h4>
-                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Chaque création en crochet tricotée main par Binta.</p>
+                <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Pièces Uniques</h4>
+                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Chaque pièce est méticuleusement choisie pour son style unique.</p>
               </div>
             </div>
 
@@ -199,7 +199,7 @@ export default function Home() {
               </div>
               <div className="space-y-0.5">
                 <h4 className="text-[11px] font-bold uppercase tracking-wider text-charcoal-900">Versatile Brand</h4>
-                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Associer artisanat local & cosmétiques tendances.</p>
+                <p className="text-[10px] text-charcoal-450 font-light leading-snug">Associer mode streetwear & cosmétiques tendances.</p>
               </div>
             </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
               </div>
               
               <p className="text-xs text-charcoal-450 leading-relaxed font-light">
-                Découvrez nos derniers arrivages de gloss, accessoires et pièces crochetées main à Dakar par Binta. Des stocks très limités !
+                Découvrez nos derniers arrivages de streetwear, accessoires et cosmétiques à Dakar. Des pièces souvent uniques !
               </p>
 
               <Link
@@ -270,7 +270,7 @@ export default function Home() {
             <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-terracotta-600 block">Notre Curation</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold">Notre processus de création</h2>
             <p className="text-xs text-charcoal-500 font-light leading-relaxed">
-              De l&apos;élaboration minutieuse des mailles crochetées à la main au choix rigoureux de cosmétiques de marque authentiques.
+              De la sélection minutieuse de pièces streetwear de qualité au choix rigoureux de cosmétiques de marque authentiques.
             </p>
           </div>
 
@@ -295,7 +295,7 @@ export default function Home() {
             <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-terracotta-600 block">À Propos de KC</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 leading-tight">Plus qu&apos;une marque, une passion.</h2>
             <p className="text-xs text-charcoal-450 leading-relaxed font-light">
-              KnittaCorner est une marque versatile basée à Dakar, Sénégal. Fondée par Binta, notre univers associe des créations en crochet uniques tricotées entièrement à la main et une sélection pointue de cosmétiques et maquillage tendance. Chaque produit est choisi ou conçu pour sublimer votre quotidien.
+              KnittaCorner est un concept store basé à Dakar, Sénégal. Fondé par Binta, notre univers associe une curation pointue de vêtements streetwear, des pièces d&apos;exception et une sélection de cosmétiques tendance. Chaque article est choisi pour affirmer votre style au quotidien.
             </p>
             <Link
               href="/about"
@@ -326,7 +326,7 @@ export default function Home() {
             <div className="relative aspect-square w-full overflow-hidden rounded-xs border border-sand-100 bg-sand-50">
               <Image
                 src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500&auto=format&fit=crop&q=80"
-                alt="Sac cabas fait main crochet"
+                alt="Vêtement streetwear"
                 fill
                 className="object-cover hover:scale-103 transition-transform duration-500"
               />

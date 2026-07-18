@@ -18,7 +18,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-3xl px-4 text-center space-y-4">
           <span className="text-xs uppercase font-bold tracking-widest text-terracotta-600">Notre Histoire</span>
           <h1 className="font-serif text-4xl sm:text-5xl font-light text-charcoal-900 leading-tight">
-            Créations Crochet &<br />
+            Sélection Mode &<br />
             <span className="italic font-medium text-charcoal-700">Beauté Authentique.</span>
           </h1>
           <p className="text-xs text-charcoal-400 uppercase tracking-widest">Une marque versatile conçue à Dakar, Sénégal</p>
@@ -33,16 +33,16 @@ export default function AboutPage() {
           <div className="md:col-span-6 space-y-6">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-charcoal-900">Pourquoi KnittaCorner ?</h2>
             <p className="text-sm text-charcoal-500 leading-relaxed font-light">
-              Fondée par Binta, <strong className="text-charcoal-900">KnittaCorner</strong> est née de la passion pour le tricot, le crochet et le maquillage. Notre concept hybride &laquo; Versatile brand &raquo; vise à proposer sous un même toit des accessoires uniques faits main et des cosmétiques tendance rigoureusement sélectionnés.
+              Fondée par Binta, <strong className="text-charcoal-900">KnittaCorner</strong> est née de la passion pour la mode, le streetwear et la beauté. Notre concept hybride &laquo; Versatile brand &raquo; vise à proposer sous un même toit des pièces uniques de mode (streetwear, vintage, seconde main) et des cosmétiques tendance rigoureusement sélectionnés.
             </p>
             <p className="text-sm text-charcoal-500 leading-relaxed font-light">
-              Chaque sac, bob et accessoire est crocheté avec le plus grand soin dans notre atelier à Dakar. Nous sélectionnons parallèlement des marques de cosmétiques (comme Kiss Beauty, Revolution Makeup, Beauty Treats) pour leur qualité et leur adéquation avec les peaux de nos clientes, afin de vous offrir des produits fiables et éclatants.
+              Chaque vêtement et accessoire est sélectionné avec le plus grand soin pour son style et sa qualité. Nous sélectionnons parallèlement des marques de cosmétiques (comme Kiss Beauty, Revolution Makeup, Beauty Treats) pour leur qualité et leur adéquation avec les peaux de nos clientes, afin de vous offrir des produits fiables et éclatants.
             </p>
           </div>
           <div className="md:col-span-6 relative aspect-video md:aspect-[4/3] rounded-xs overflow-hidden bg-sand-50 border border-sand-100">
             <Image
               src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80"
-              alt="Créations crochet tricotées main par Binta"
+              alt="Pièce de mode streetwear sélectionnée par Binta"
               fill
               className="object-cover"
             />
@@ -63,8 +63,8 @@ export default function AboutPage() {
             {[
               {
                 step: "01",
-                name: "Tricot & Crochet Main",
-                desc: "Nous concevons et réalisons chaque produit en laine et coton de façon artisanale à Dakar, assurant des pièces solides aux finitions soignées."
+                name: "Curation Streetwear",
+                desc: "Nous dénichons des pièces streetwear et de seconde main de grande qualité à Dakar, assurant un style pointu et authentique."
               },
               {
                 step: "02",
@@ -73,8 +73,8 @@ export default function AboutPage() {
               },
               {
                 step: "03",
-                name: "Vérification des Mesures",
-                desc: "Pour les vêtements et sacs en crochet, nous indiquons les dimensions précises à plat pour éviter les surprises de taille."
+                name: "Vérification de l'État",
+                desc: "Pour chaque vêtement et accessoire, nous indiquons les dimensions et l'état précis pour éviter les mauvaises surprises."
               },
               {
                 step: "04",
@@ -95,7 +95,7 @@ export default function AboutPage() {
         <div className="text-center space-y-6 max-w-lg mx-auto py-10">
           <h2 className="font-serif text-3xl font-bold text-charcoal-900">Découvrez l&apos;Univers KnittaCorner</h2>
           <p className="text-xs text-charcoal-400 leading-relaxed">
-            Trouvez le parfait sac cabas tricoté main et les essentiels de votre rituel beauté quotidien.
+            Trouvez la pièce de mode parfaite et les essentiels de votre rituel beauté quotidien.
           </p>
           <div>
             <Link

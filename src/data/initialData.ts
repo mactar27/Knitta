@@ -262,7 +262,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   }
 ];
 
-export const CATEGORIES = ["Tout", "Crochet & Fait Main", "Beauté & Cosmétique", "Accessoires & Chaussures"];
+export const CATEGORIES = ["Tout", "Vêtements & Streetwear", "Beauté & Cosmétique", "Accessoires & Sneakers"];
 export const BRANDS = ["Tout", "KnittaCorner", "Kiss Beauty", "Revolution Makeup", "Beauty Treats", "Autre"];
 export const SIZES = [
   "Tout",

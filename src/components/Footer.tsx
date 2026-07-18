@@ -41,7 +41,7 @@ export const Footer = () => {
               Créations uniques. Beauté & Style.
             </p>
             <p className="text-xs text-charcoal-400 leading-relaxed font-light max-w-xs">
-              Sacs crochetés main par Binta et cosmétiques tendance sélectionnés pour révéler votre personnalité.
+              Pièces streetwear pointues et cosmétiques tendance sélectionnés pour révéler votre personnalité.
             </p>
           </div>
 
