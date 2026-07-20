@@ -12,13 +12,10 @@ export function SplashScreen() {
     
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 2500);
+    }, 2800);
     
     return () => clearTimeout(timer);
   }, []);
-
-  const knittaText = "Knitta".split("");
-  const cornerText = "Corner".split("");
 
   return (
     <AnimatePresence>
@@ -29,38 +26,33 @@ export function SplashScreen() {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FCFAF7]"
         >
-          <div className="flex flex-col items-center space-y-2">
-            <div className="font-serif text-5xl sm:text-6xl font-bold text-charcoal-900 tracking-wider flex">
-              {knittaText.map((char, index) => (
-                <motion.span
-                  key={`k-${index}`}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.12, duration: 0.3, ease: "easeOut" }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </div>
-            <div className="font-serif text-5xl sm:text-6xl font-bold text-terracotta-600 tracking-wider flex">
-              {cornerText.map((char, index) => (
-                <motion.span
-                  key={`c-${index}`}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7 + index * 0.12, duration: 0.3, ease: "easeOut" }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-                className="ml-1 text-terracotta-600"
+          <div className="flex flex-col items-center leading-none space-y-3">
+            {/* KNITTA */}
+            <div className="relative font-serif text-5xl sm:text-7xl font-bold tracking-widest uppercase">
+              {/* Base faded text */}
+              <span className="text-[#E6E0D8]">KNITTA</span>
+              {/* Filling colored text */}
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
+                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-charcoal-900"
               >
-                |
-              </motion.span>
+                KNITTA
+              </motion.div>
+            </div>
+
+            {/* CORNER */}
+            <div className="relative font-serif text-5xl sm:text-7xl font-bold tracking-widest uppercase">
+              <span className="text-[#E6E0D8]">CORNER</span>
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 1.2 }}
+                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-terracotta-600"
+              >
+                CORNER
+              </motion.div>
             </div>
           </div>
         </motion.div>
