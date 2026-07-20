@@ -29,11 +29,11 @@ export function SplashScreen() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#40271D]"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FCFAF7]"
         >
           <div className="flex flex-col items-center leading-none space-y-4">
             <div 
-              className="relative text-[5.5rem] sm:text-8xl md:text-9xl tracking-wide text-[#EAE5DF]/20"
+              className="relative text-[5.5rem] sm:text-8xl md:text-9xl tracking-wide text-sand-200"
               style={{ fontFamily: 'var(--font-cursive)' }}
             >
               <span className="pr-2">Knitta Corner</span>
@@ -41,7 +41,7 @@ export function SplashScreen() {
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.8, ease: "easeInOut", delay: 0.2 }}
-                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#D8A77E]" // Golden/bronze text
+                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-terracotta-600" // Terracotta text fill
               >
                 <span className="pr-2">Knitta Corner</span>
               </motion.div>
