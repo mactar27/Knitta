@@ -126,42 +126,61 @@ export default function AdminPage() {
       "Entretien : Nettoyage à sec recommandé"
     ];
 
-    try {
-      if (editingProductId) {
-        // Find existing product to preserve fields not in form
-        const existingProduct = products.find(p => p.id === editingProductId);
-        if (existingProduct) {
-          await editProduct({
-            ...existingProduct,
+    let attempt = 0;
+    const maxAttempts = 3;
+    let saved = false;
+
+    while (attempt < maxAttempts && !saved) {
+      try {
+        if (editingProductId) {
+          // Find existing product to preserve fields not in form
+          const existingProduct = products.find(p => p.id === editingProductId);
+          if (existingProduct) {
+            await editProduct({
+              ...existingProduct,
+              name: newProduct.name,
+              description: newProduct.description,
+              price: Number(newProduct.price),
+              category: newProduct.category,
+              size: newProduct.size,
+              brand: newProduct.brand,
+              condition: newProduct.condition,
+              images: imagesArray,
+              details: detailsArray,
+              target: newProduct.target as "Homme" | "Femme" | "Enfant" | "Unisexe"
+            });
+          }
+        } else {
+          await addProduct({
             name: newProduct.name,
             description: newProduct.description,
             price: Number(newProduct.price),
             category: newProduct.category,
             size: newProduct.size,
             brand: newProduct.brand,
-            condition: newProduct.condition,
+            condition: newProduct.condition as any,
             images: imagesArray,
+            isNewArrival: true,
+            isBestSeller: false,
             details: detailsArray,
-            target: newProduct.target as "Homme" | "Femme" | "Enfant" | "Unisexe"
+            target: newProduct.target as any
           });
         }
-      } else {
-        await addProduct({
-          name: newProduct.name,
-          description: newProduct.description,
-          price: Number(newProduct.price),
-          category: newProduct.category,
-          size: newProduct.size,
-          brand: newProduct.brand,
-          condition: newProduct.condition as any,
-          images: imagesArray,
-          isNewArrival: true,
-          isBestSeller: false,
-          details: detailsArray,
-          target: newProduct.target as any
-        });
+        saved = true;
+      } catch (error) {
+        attempt++;
+        console.error(`Save attempt ${attempt} failed:`, error);
+        if (attempt >= maxAttempts) {
+          alert("Erreur de connexion au serveur (Délai dépassé). Veuillez réessayer.");
+          setIsSubmitting(false);
+          return;
+        }
+        // Wait 1.5 seconds before retrying to allow server to wake up
+        await new Promise(resolve => setTimeout(resolve, 1500));
       }
+    }
 
+    if (saved) {
       setFormSuccess(true);
       // Reset Form
       setNewProduct({
@@ -186,11 +205,8 @@ export default function AdminPage() {
         setFormSuccess(false);
         setIsAddFormOpen(false);
         setEditingProductId(null);
+        setIsSubmitting(false);
       }, 1500);
-    } catch (error) {
-      console.error("Failed to save product:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
