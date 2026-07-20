@@ -137,12 +137,14 @@ export default function Home() {
           {/* Use CSS media queries to handle the background image and size */}
           <style dangerouslySetInnerHTML={{__html: `
             .hero-bg-container {
-              background-image: url('/hero-bg.png');
-              background-size: 100% auto;
+              background-image: url('/tel.png');
+              background-size: cover;
               background-position: center center;
+              background-repeat: no-repeat;
             }
             @media (min-width: 768px) {
               .hero-bg-container {
+                background-image: url('/hero-bg.png');
                 background-size: cover;
               }
             }

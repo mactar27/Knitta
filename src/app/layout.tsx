@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, Great_Vibes } from "next/font/google";
-import { cookies } from "next/headers";
 import { ShopProvider } from "@/context/ShopContext";
 import { SplashScreen } from "@/components/SplashScreen";
 import "./globals.css";
@@ -47,13 +46,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const hasSeenSplash = cookieStore.has("kc_splash_seen");
 
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
@@ -61,7 +58,7 @@ export default async function RootLayout({
         className={`${playfair.variable} ${inter.variable} ${greatVibes.variable} antialiased`}
       >
         <ShopProvider>
-          {!hasSeenSplash && <SplashScreen />}
+          <SplashScreen />
           {children}
         </ShopProvider>
         <script

@@ -11,7 +11,8 @@ import { motion } from "framer-motion";
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FCFAF7]">
-      <Navbar />
+      <Navbar />e
+
 
       {/* Header */}
       <section className="bg-sand-50 border-b border-sand-100 py-16">
@@ -27,7 +28,7 @@ export default function AboutPage() {
 
       {/* Core Narrative */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 space-y-20">
-        
+
         {/* Row 1: The mission */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6 space-y-6">
