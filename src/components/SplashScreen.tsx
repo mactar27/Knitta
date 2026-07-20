@@ -24,37 +24,33 @@ export function SplashScreen() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FCFAF7]"
+          className="fixed inset-0 z-[9999] bg-[#40271D] overflow-hidden"
         >
-          <div className="flex flex-col items-center leading-none space-y-3">
-            {/* KNITTA */}
-            <div className="relative font-serif text-5xl sm:text-7xl font-bold tracking-widest uppercase">
-              {/* Base faded text */}
-              <span className="text-[#E6E0D8]">KNITTA</span>
-              {/* Filling colored text */}
-              <motion.div
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
-                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-charcoal-900"
-              >
-                KNITTA
-              </motion.div>
-            </div>
+          <style dangerouslySetInnerHTML={{__html: `
+            .splash-hero-bg {
+              background-image: url('/hero-bg.png');
+              background-size: 100% auto;
+              background-position: center center;
+              background-repeat: no-repeat;
+            }
+            @media (min-width: 768px) {
+              .splash-hero-bg {
+                background-size: cover;
+              }
+            }
+          `}} />
+          
+          {/* The static hero image background */}
+          <div className="absolute inset-0 w-full h-full splash-hero-bg" />
 
-            {/* CORNER */}
-            <div className="relative font-serif text-5xl sm:text-7xl font-bold tracking-widest uppercase">
-              <span className="text-[#E6E0D8]">CORNER</span>
-              <motion.div
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, ease: "easeInOut", delay: 1.2 }}
-                className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-terracotta-600"
-              >
-                CORNER
-              </motion.div>
-            </div>
-          </div>
+          {/* The mask overlay that slides away to the right to reveal the image */}
+          <motion.div
+            initial={{ left: "0%" }}
+            animate={{ left: "100%" }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            className="absolute inset-y-0 right-0 bg-[#40271D]"
+            style={{ right: 0 }}
+          />
         </motion.div>
       )}
     </AnimatePresence>
