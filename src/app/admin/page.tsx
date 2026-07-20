@@ -552,6 +552,11 @@ export default function AdminPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
                           <label className="font-bold text-charcoal-800 uppercase">Photo Principale</label>
+                          {newProduct.image1 && (
+                            <div className="relative w-16 h-20 mb-2 border border-sand-200 rounded-xs overflow-hidden">
+                              <Image src={newProduct.image1} alt="Photo principale" fill className="object-cover" />
+                            </div>
+                          )}
                           <input
                             type="file"
                             accept="image/*"
@@ -570,6 +575,11 @@ export default function AdminPage() {
                         </div>
                         <div className="space-y-1">
                           <label className="font-bold text-charcoal-800 uppercase">Photo de Détail</label>
+                          {newProduct.image2 && (
+                            <div className="relative w-16 h-20 mb-2 border border-sand-200 rounded-xs overflow-hidden">
+                              <Image src={newProduct.image2} alt="Photo de détail" fill className="object-cover" />
+                            </div>
+                          )}
                           <input
                             type="file"
                             accept="image/*"
