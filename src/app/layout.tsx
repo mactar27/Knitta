@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Inter, Great_Vibes } from "next/font/google";
 import { cookies } from "next/headers";
 import { ShopProvider } from "@/context/ShopContext";
 import { SplashScreen } from "@/components/SplashScreen";
@@ -15,6 +15,12 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-cursive",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -52,7 +58,7 @@ export default async function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased`}
+        className={`${playfair.variable} ${inter.variable} ${greatVibes.variable} antialiased`}
       >
         <ShopProvider>
           {!hasSeenSplash && <SplashScreen />}
