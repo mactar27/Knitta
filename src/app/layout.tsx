@@ -41,18 +41,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const hasSeenSplash = cookieStore.has("kc_splash_seen");
+
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${playfair.variable} ${inter.variable} antialiased`}
       >
         <ShopProvider>
-          {!cookies().has("kc_splash_seen") && <SplashScreen />}
+          {!hasSeenSplash && <SplashScreen />}
           {children}
         </ShopProvider>
         <script
