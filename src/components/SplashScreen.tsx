@@ -33,7 +33,7 @@ export function SplashScreen() {
         >
           <div className="flex flex-col items-center leading-none space-y-4">
             <div 
-              className="relative text-[5.5rem] sm:text-8xl md:text-9xl tracking-wide text-sand-200"
+              className="relative text-6xl sm:text-8xl md:text-9xl tracking-wide text-sand-200 whitespace-nowrap"
               style={{ fontFamily: 'var(--font-cursive)' }}
             >
               <span className="pr-2">Knitta Corner</span>
