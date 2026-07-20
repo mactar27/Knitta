@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import { ShopProvider } from "@/context/ShopContext";
 import { SplashScreen } from "@/components/SplashScreen";
 import "./globals.css";
@@ -51,7 +52,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${inter.variable} antialiased`}
       >
         <ShopProvider>
-          <SplashScreen />
+          {!cookies().has("kc_splash_seen") && <SplashScreen />}
           {children}
         </ShopProvider>
         <script

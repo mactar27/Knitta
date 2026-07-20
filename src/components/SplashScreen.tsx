@@ -4,23 +4,18 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function SplashScreen() {
-  const [showSplash, setShowSplash] = useState<boolean | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    const hasSeenSplash = sessionStorage.getItem("kc_splash_seen");
-    if (hasSeenSplash) {
+    // Only set the cookie once the component mounts
+    document.cookie = "kc_splash_seen=true; path=/; max-age=86400"; // Expires in 1 day for demo purposes, or session
+    
+    const timer = setTimeout(() => {
       setShowSplash(false);
-    } else {
-      setShowSplash(true);
-      const timer = setTimeout(() => {
-        setShowSplash(false);
-        sessionStorage.setItem("kc_splash_seen", "true");
-      }, 2500);
-      return () => clearTimeout(timer);
-    }
+    }, 2500);
+    
+    return () => clearTimeout(timer);
   }, []);
-
-  if (showSplash === null) return null;
 
   return (
     <AnimatePresence>
