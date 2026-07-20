@@ -220,7 +220,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     brand: "KnittaCorner",
     condition: "Fait main",
     images: [
-      "https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?w=800&auto=format&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
     isNewArrival: true,
