@@ -209,7 +209,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Shopper checkout order placement
   const placeOrder = async (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => {
-    const total = cart.reduce((sum, item) => sum + item.product.price, 0);
+    const shippingFee = 2000;
+    const total = cart.reduce((sum, item) => sum + item.product.price, 0) + shippingFee;
     const newOrderData = {
       customerName: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
       customerPhone: shippingInfo.phone,

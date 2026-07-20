@@ -12,7 +12,8 @@ export default function CartPage() {
   const { cart, removeFromCart } = useShop();
 
   const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
-  const grandTotal = cartTotal;
+  const shippingFee = 2000;
+  const grandTotal = cartTotal + shippingFee;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FCFAF7]">
@@ -119,7 +120,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between items-center text-xs text-charcoal-500 font-medium">
                     <span>Livraison</span>
-                    <span className="text-right max-w-[120px]">Calculé selon le lieu</span>
+                    <span className="text-right max-w-[120px]">{shippingFee} FCFA</span>
                   </div>
                   <div className="border-t border-sand-150 pt-3 flex justify-between text-sm font-bold text-charcoal-950">
                     <span className="font-serif">Total Général</span>

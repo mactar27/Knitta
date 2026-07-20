@@ -21,7 +21,7 @@ function ShopContent() {
   const [selectedSize, setSelectedSize] = useState("Tout");
   const [selectedBrand, setSelectedBrand] = useState("Tout");
   const [selectedTarget, setSelectedTarget] = useState("Tout");
-  const [priceRange, setPriceRange] = useState(50);
+  const [priceRange, setPriceRange] = useState(50000);
   const [sortBy, setSortBy] = useState("newest");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -47,7 +47,7 @@ function ShopContent() {
     setSelectedSize("Tout");
     setSelectedBrand("Tout");
     setSelectedTarget("Tout");
-    setPriceRange(50);
+    setPriceRange(50000);
     setSortBy("newest");
     router.replace("/shop");
   };
@@ -225,16 +225,16 @@ function ShopContent() {
               </div>
               <input
                 type="range"
-                min="5"
-                max="50"
-                step="2"
+                min="0"
+                max="50000"
+                step="500"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
                 className="w-full accent-terracotta-600 bg-sand-200 rounded-lg appearance-none cursor-pointer h-1.5"
               />
               <div className="flex items-center justify-between text-[10px] text-charcoal-400">
-                <span>5 FCFA</span>
-                <span>50 FCFA</span>
+                <span>0 FCFA</span>
+                <span>50 000 FCFA</span>
               </div>
             </div>
           </aside>
@@ -441,16 +441,16 @@ function ShopContent() {
                   </div>
                   <input
                     type="range"
-                    min="5"
-                    max="50"
-                    step="2"
+                    min="0"
+                    max="50000"
+                    step="500"
                     value={priceRange}
                     onChange={(e) => setPriceRange(Number(e.target.value))}
                     className="w-full accent-terracotta-600 bg-sand-200 rounded-lg appearance-none h-1.5 cursor-pointer"
                   />
                   <div className="flex items-center justify-between text-[10px] text-charcoal-400 mt-1">
-                    <span>5 FCFA</span>
-                    <span>50 FCFA</span>
+                    <span>0 FCFA</span>
+                    <span>50 000 FCFA</span>
                   </div>
                 </div>
               </div>
