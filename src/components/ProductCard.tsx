@@ -48,7 +48,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-sand-50">
           <Link href={`/product/${product.id}`}>
             <Image
-              src={product.images[0]}
+              src={product.images && product.images.length > 0 && product.images[0] ? product.images[0] : "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=80"}
               alt={product.name}
               fill
               sizes="(max-width: 640px) 50vw, 25vw"

@@ -12,8 +12,7 @@ export default function CartPage() {
   const { cart, removeFromCart } = useShop();
 
   const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
-  const shippingFee = cartTotal > 150 ? 0 : cart.length > 0 ? 12 : 0;
-  const grandTotal = cartTotal + shippingFee;
+  const grandTotal = cartTotal;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FCFAF7]">
@@ -118,15 +117,10 @@ export default function CartPage() {
                     <span>Sous-total panier</span>
                     <span>{cartTotal} FCFA</span>
                   </div>
-                  <div className="flex justify-between text-charcoal-500">
-                    <span>Livraison éco</span>
-                    <span>{shippingFee === 0 ? "GRATUITE" : `${shippingFee} FCFA`}</span>
+                  <div className="flex justify-between items-center text-xs text-charcoal-500 font-medium">
+                    <span>Livraison</span>
+                    <span className="text-right max-w-[120px]">Calculé selon le lieu</span>
                   </div>
-                  {shippingFee > 0 && (
-                    <p className="text-[10px] text-charcoal-400 font-light leading-normal">
-                      Ajoutez {(150 - cartTotal).toFixed(0)} FCFA de plus pour obtenir la livraison gratuite.
-                    </p>
-                  )}
                   <div className="border-t border-sand-150 pt-3 flex justify-between text-sm font-bold text-charcoal-950">
                     <span className="font-serif">Total Général</span>
                     <span>{grandTotal} FCFA</span>

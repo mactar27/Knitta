@@ -23,8 +23,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
 
   const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
-  const shippingFee = cartTotal > 150 ? 0 : cart.length > 0 ? 12 : 0;
-  const grandTotal = cartTotal + shippingFee;
+  const grandTotal = cartTotal;
 
   const handleCheckoutSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,8 +68,8 @@ export default function CheckoutPage() {
               <span className="text-charcoal-400">Date :</span>
               <span className="text-charcoal-900 text-right">{placedOrder.date}</span>
 
-              <span className="text-charcoal-400">Montant débité :</span>
-              <strong className="text-charcoal-955 text-right">{placedOrder.total + shippingFee} FCFA</strong>
+              <span className="text-charcoal-400">Montant (hors livraison) :</span>
+              <strong className="text-charcoal-955 text-right">{placedOrder.total} FCFA</strong>
 
               <span className="text-charcoal-400">Destinataire :</span>
               <span className="text-charcoal-900 text-right">{placedOrder.customerName}</span>
@@ -245,9 +244,9 @@ export default function CheckoutPage() {
                     <span>Sous-total</span>
                     <span>{cartTotal} FCFA</span>
                   </div>
-                  <div className="flex justify-between text-charcoal-500">
-                    <span>Livraison éco</span>
-                    <span>{shippingFee === 0 ? "GRATUITE" : `${shippingFee} FCFA`}</span>
+                  <div className="flex justify-between items-center text-[10px] text-charcoal-500 font-medium">
+                    <span>Frais de livraison</span>
+                    <span className="text-right max-w-[120px]">Calculé selon le lieu</span>
                   </div>
                   <div className="border-t border-sand-155 pt-3 flex justify-between text-sm font-bold text-charcoal-950">
                     <span className="font-serif">Total Général</span>

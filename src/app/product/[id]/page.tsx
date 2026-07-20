@@ -90,7 +90,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           <div className="lg:col-span-7 space-y-4">
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xs border border-sand-100 bg-sand-50">
               <Image
-                src={activeImage || product.images[0]}
+                src={activeImage || (product.images && product.images.length > 0 && product.images[0] ? product.images[0] : "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=80")}
                 alt={product.name}
                 fill
                 priority
