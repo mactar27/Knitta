@@ -17,6 +17,9 @@ export function SplashScreen() {
     return () => clearTimeout(timer);
   }, []);
 
+  const knittaText = "Knitta".split("");
+  const cornerText = "Corner".split("");
+
   return (
     <AnimatePresence>
       {showSplash && (
@@ -26,34 +29,40 @@ export function SplashScreen() {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FCFAF7]"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col items-center"
-          >
-            <div className="flex flex-col items-center space-y-2">
-              <span className="font-serif text-5xl sm:text-6xl font-bold text-charcoal-900 tracking-wider">
-                Knitta
-              </span>
-              <span className="font-serif text-5xl sm:text-6xl font-bold text-terracotta-600 tracking-wider">
-                Corner
-              </span>
+          <div className="flex flex-col items-center space-y-2">
+            <div className="font-serif text-5xl sm:text-6xl font-bold text-charcoal-900 tracking-wider flex">
+              {knittaText.map((char, index) => (
+                <motion.span
+                  key={`k-${index}`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.12, duration: 0.3, ease: "easeOut" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
             </div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="mt-8 h-1 w-24 bg-sand-200 overflow-hidden rounded-full"
-            >
-              <motion.div 
-                className="h-full bg-terracotta-600"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-              />
-            </motion.div>
-          </motion.div>
+            <div className="font-serif text-5xl sm:text-6xl font-bold text-terracotta-600 tracking-wider flex">
+              {cornerText.map((char, index) => (
+                <motion.span
+                  key={`c-${index}`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.7 + index * 0.12, duration: 0.3, ease: "easeOut" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                className="ml-1 text-terracotta-600"
+              >
+                |
+              </motion.span>
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
