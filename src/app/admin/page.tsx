@@ -27,20 +27,36 @@ import { Footer } from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminPage() {
-  // --- ADMIN LOGIN GATE ---
   const ADMIN_PASSWORD = "Ma12344321";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const auth = localStorage.getItem("kc_admin_auth");
+      if (auth === "true") {
+        setIsAuthenticated(true);
+      }
+      setIsAuthLoaded(true);
+    }
+  }, []);
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (loginPassword === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
+      localStorage.setItem("kc_admin_auth", "true");
       setLoginError("");
     } else {
       setLoginError("Mot de passe incorrect. Veuillez réessayer.");
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem("kc_admin_auth");
   };
 
   const {
@@ -242,6 +258,10 @@ export default function AdminPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (!isAuthLoaded) {
+    return <div className="min-h-screen bg-[#FCFAF7] flex items-center justify-center text-charcoal-400">Chargement...</div>;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FCFAF7]">
       <Navbar />
@@ -326,7 +346,13 @@ export default function AdminPage() {
             </nav>
 
             {/* Back to home */}
-            <div className="pt-2 border-t border-sand-100">
+            <div className="pt-2 border-t border-sand-100 flex flex-col">
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 w-full text-left text-xs font-semibold px-4 py-3 rounded-xs text-red-500 hover:bg-red-50 transition-colors"
+              >
+                Se déconnecter
+              </button>
               <Link
                 href="/"
                 className="flex items-center gap-2 w-full text-left text-xs font-semibold px-4 py-3 rounded-xs text-charcoal-500 hover:bg-terracotta-50 hover:text-terracotta-600 transition-colors"
