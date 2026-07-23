@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
+  const cartTotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   const shippingFee = 2000;
   const grandTotal = cartTotal + shippingFee;
 
@@ -232,9 +232,9 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="font-serif text-xs font-semibold text-charcoal-900 line-clamp-1">{item.product.name}</h4>
-                        <p className="text-[10px] text-charcoal-400 mt-0.5">Taille : {item.product.size} | Marque : {item.product.brand}</p>
+                        <p className="text-[10px] text-charcoal-400 mt-0.5">Qté : {item.quantity} | Taille : {item.product.size} | Marque : {item.product.brand}</p>
                       </div>
-                      <span className="text-xs font-bold text-charcoal-950">{item.product.price} FCFA</span>
+                      <span className="text-xs font-bold text-charcoal-950 text-right">{item.product.price * item.quantity} FCFA</span>
                     </div>
                   ))}
                 </div>

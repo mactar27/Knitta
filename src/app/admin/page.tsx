@@ -713,19 +713,19 @@ export default function AdminPage() {
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
                       <tr className="bg-sand-50 border-b border-sand-100 font-serif text-charcoal-850">
-                        <th className="p-4 font-bold">Order ID</th>
-                        <th className="p-4 font-bold">Customer</th>
+                        <th className="p-4 font-bold">Réf.</th>
+                        <th className="p-4 font-bold">Client</th>
                         <th className="p-4 font-bold">Date</th>
-                        <th className="p-4 font-bold">Items Count</th>
-                        <th className="p-4 font-bold">Price Paid</th>
-                        <th className="p-4 font-bold">Shipping Status</th>
+                        <th className="p-4 font-bold">Articles</th>
+                        <th className="p-4 font-bold">Montant</th>
+                        <th className="p-4 font-bold">Statut</th>
                         <th className="p-4 font-bold text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-sand-100">
                       {orders.map((ord) => (
                         <tr key={ord.id} className="hover:bg-sand-50/50">
-                          <td className="p-4 font-bold text-charcoal-900">{ord.id}</td>
+                          <td className="p-4 font-bold text-charcoal-900 uppercase">#{ord.id.slice(0, 8)}</td>
                           <td className="p-4">
                             <div>
                               <strong className="text-charcoal-900 block font-semibold">{ord.customerName}</strong>
@@ -733,7 +733,7 @@ export default function AdminPage() {
                             </div>
                           </td>
                           <td className="p-4 text-charcoal-500">{ord.date}</td>
-                          <td className="p-4 text-charcoal-800 font-medium">{ord.items.length} items</td>
+                          <td className="p-4 text-charcoal-800 font-medium">{ord.items.length} {ord.items.length > 1 ? 'articles' : 'article'}</td>
                           <td className="p-4 font-bold text-charcoal-950">{ord.total} FCFA</td>
                           <td className="p-4">
                             <select
@@ -741,9 +741,9 @@ export default function AdminPage() {
                               onChange={(e) => updateOrderStatus(ord.id, e.target.value as "Pending" | "Shipped" | "Delivered")}
                               className="bg-transparent border border-sand-250 rounded-sm py-1 px-2 text-[10px] font-semibold text-charcoal-800 cursor-pointer focus:outline-none"
                             >
-                              <option value="Pending">Pending</option>
-                              <option value="Shipped">Shipped</option>
-                              <option value="Delivered">Delivered</option>
+                              <option value="Pending">En attente</option>
+                              <option value="Shipped">Expédié</option>
+                              <option value="Delivered">Livré</option>
                             </select>
                           </td>
                           <td className="p-4 text-center">

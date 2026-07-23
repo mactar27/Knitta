@@ -9,9 +9,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useShop();
+  const { cart, removeFromCart, updateCartItemQuantity } = useShop();
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
+  const cartTotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   const shippingFee = 2000;
   const grandTotal = cartTotal + shippingFee;
 
@@ -30,14 +30,14 @@ export default function CartPage() {
             <div>
               <h2 className="font-serif text-xl font-medium text-charcoal-900">Votre panier est vide</h2>
               <p className="text-xs text-charcoal-400 mt-1 max-w-xs">
-                Les pièces vintage de KC étant des articles uniques (1-of-1), les stocks partent très vite. Saisissez la vôtre avant qu&apos;elle ne disparaisse !
+                Découvrez nos pièces crochetées à la main et notre sélection beauté pour trouver votre bonheur !
               </p>
             </div>
             <Link
               href="/shop"
               className="inline-flex items-center justify-center rounded-sm bg-charcoal-900 px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-white hover:bg-terracotta-600 transition-colors"
             >
-              Découvrir les vêtements vintage
+              Découvrir la collection
             </Link>
           </div>
         ) : (
@@ -46,7 +46,7 @@ export default function CartPage() {
             {/* LEFT COLUMN: Cart Items list */}
             <div className="lg:col-span-8 space-y-4">
               <div className="p-3 bg-amber-50 border border-amber-100 text-amber-800 text-xs rounded-sm">
-                <strong>Attention :</strong> Nos articles de seconde main sont des pièces uniques. Un article reste disponible pour les autres acheteurs tant que la commande n&apos;est pas entièrement réglée.
+                <strong>Attention :</strong> Certains de nos articles faits main ont un stock limité. Un article reste disponible pour les autres acheteurs tant que la commande n&apos;est pas entièrement réglée.
               </div>
 
               <div className="border border-sand-100 rounded-sm bg-white divide-y divide-sand-100 shadow-3xs">
@@ -85,13 +85,28 @@ export default function CartPage() {
 
                     {/* Actions */}
                     <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-sand-50 mt-4 sm:mt-0 gap-4">
+                      <div className="flex items-center border border-sand-200 rounded-sm">
+                        <button
+                          onClick={() => updateCartItemQuantity(item.product.id, item.quantity - 1)}
+                          disabled={item.quantity <= 1}
+                          className="px-2 py-1 text-charcoal-500 hover:bg-sand-50 disabled:opacity-50 transition-colors text-sm font-bold"
+                        >
+                          -
+                        </button>
+                        <span className="text-xs font-semibold px-2 min-w-[24px] text-center">{item.quantity}</span>
+                        <button
+                          onClick={() => updateCartItemQuantity(item.product.id, item.quantity + 1)}
+                          className="px-2 py-1 text-charcoal-500 hover:bg-sand-50 transition-colors text-sm font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
                       <button
                         onClick={() => removeFromCart(item.product.id)}
-                        className="text-xs text-charcoal-400 hover:text-red-500 transition-colors flex items-center gap-1 p-1.5 border border-sand-200 sm:border-0 rounded-xs sm:rounded-none"
+                        className="text-xs text-charcoal-400 hover:text-red-500 transition-colors flex items-center gap-1 p-1.5"
                       >
                         <Trash2 className="h-4 w-4" /> <span className="sm:hidden">Retirer</span>
                       </button>
-                      <span className="text-xs font-semibold text-charcoal-400">Qté : 1 (Max)</span>
                     </div>
                   </div>
                 ))}

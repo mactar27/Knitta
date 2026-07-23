@@ -9,7 +9,7 @@ import { useShop } from "@/context/ShopContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
-  const { cart, wishlist, currentUser, removeFromCart } = useShop();
+  const { cart, wishlist, currentUser, removeFromCart, updateCartItemQuantity } = useShop();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +40,7 @@ export const Navbar = () => {
     }
   };
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.product.price, 0);
+  const cartTotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
   const isHome = pathname === "/";
   const scrolledStyle = "bg-[#FCFAF7]/95 backdrop-blur-md border-b border-sand-100 shadow-2xs text-charcoal-900";
@@ -277,7 +277,7 @@ export const Navbar = () => {
                 ) : (
                   <div className="space-y-4">
                     <div className="p-3 bg-amber-50 border border-amber-100 text-amber-800 text-xs rounded-sm mb-4">
-                      <strong>Note :</strong> Les pièces vintage étant des pièces uniques 1-of-1, le stock est limité à 1 exemplaire par article.
+                      <strong>Note :</strong> Certains de nos articles faits main ont un stock limité.
                     </div>
                     {cart.map((item) => (
                       <div
@@ -310,13 +310,31 @@ export const Navbar = () => {
                             {item.product.price} FCFA
                           </span>
                         </div>
-                        <button
-                          onClick={() => removeFromCart(item.product.id)}
-                          className="text-charcoal-400 hover:text-red-500 transition-colors p-1"
-                          aria-label="Remove item"
-                        >
-                          <Trash2 className="h-4.5 w-4.5" />
-                        </button>
+                        <div className="flex flex-col items-end gap-2">
+                          <button
+                            onClick={() => removeFromCart(item.product.id)}
+                            className="text-charcoal-400 hover:text-red-500 transition-colors p-1"
+                            aria-label="Remove item"
+                          >
+                            <Trash2 className="h-4.5 w-4.5" />
+                          </button>
+                          <div className="flex items-center border border-sand-200 rounded-sm">
+                            <button
+                              onClick={() => updateCartItemQuantity(item.product.id, item.quantity - 1)}
+                              disabled={item.quantity <= 1}
+                              className="px-1.5 text-charcoal-500 hover:bg-sand-50 disabled:opacity-50 transition-colors text-xs"
+                            >
+                              -
+                            </button>
+                            <span className="text-[10px] font-semibold px-1 min-w-[16px] text-center">{item.quantity}</span>
+                            <button
+                              onClick={() => updateCartItemQuantity(item.product.id, item.quantity + 1)}
+                              className="px-1.5 text-charcoal-500 hover:bg-sand-50 transition-colors text-xs"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>

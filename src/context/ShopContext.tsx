@@ -7,6 +7,7 @@ import { getOrders, placeOrderAction, updateOrderStatusAction } from "@/actions/
 
 export interface CartItem {
   product: Product;
+  quantity: number;
 }
 
 export interface Order {
@@ -35,8 +36,9 @@ interface ShopContextProps {
   wishlist: string[];
   orders: Order[];
   currentUser: User | null;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
+  updateCartItemQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   toggleWishlist: (productId: string) => void;
   isWishlisted: (productId: string) => boolean;
@@ -169,19 +171,29 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Cart Operations
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity = 1) => {
     if (!product.inStock) return;
     setCart((prev) => {
-      // Check if product is already in cart.
-      // Since it is unique pre-loved clothes (1-of-1), max quantity is always 1.
-      const exists = prev.some((item) => item.product.id === product.id);
-      if (exists) return prev;
-      return [...prev, { product }];
+      const existingIndex = prev.findIndex((item) => item.product.id === product.id);
+      if (existingIndex >= 0) {
+        const newCart = [...prev];
+        newCart[existingIndex] = { ...newCart[existingIndex], quantity: newCart[existingIndex].quantity + quantity };
+        return newCart;
+      }
+      return [...prev, { product, quantity }];
     });
   };
 
   const removeFromCart = (productId: string) => {
     setCart((prev) => prev.filter((item) => item.product.id !== productId));
+  };
+
+  const updateCartItemQuantity = (productId: string, quantity: number) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.product.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item
+      )
+    );
   };
 
   const clearCart = () => {
@@ -210,7 +222,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Shopper checkout order placement
   const placeOrder = async (shippingInfo: { firstName: string; lastName: string; phone: string; address: string }) => {
     const shippingFee = 2000;
-    const total = cart.reduce((sum, item) => sum + item.product.price, 0) + shippingFee;
+    const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0) + shippingFee;
     const newOrderData = {
       customerName: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
       customerPhone: shippingInfo.phone,
@@ -218,7 +230,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       date: new Date().toISOString().split("T")[0],
       status: "Pending",
       total,
-      items: cart.map(item => ({ productId: item.product.id, quantity: 1 })),
+      items: cart.map(item => ({ productId: item.product.id, quantity: item.quantity })),
     };
 
     const res = await placeOrderAction(newOrderData);
@@ -330,10 +342,18 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteProduct = async (productId: string) => {
-    const res = await deleteProductAction(productId);
-    if (res.success) {
-      setProducts((prev) => prev.filter((p) => p.id !== productId));
-      setCart((prev) => prev.filter((item) => item.product.id !== productId));
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
+    
+    try {
+      const res = await deleteProductAction(productId);
+      if (res.success) {
+        setProducts((prev) => prev.filter((p) => p.id !== productId));
+        setCart((prev) => prev.filter((item) => item.product.id !== productId));
+      } else {
+        alert("Impossible de supprimer ce produit. " + res.error + "\n(S'il a déjà été commandé, vous ne pouvez pas le supprimer pour conserver l'historique des commandes.)");
+      }
+    } catch (err: any) {
+      alert("Erreur de connexion : " + err.message);
     }
   };
 
@@ -347,6 +367,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentUser,
         addToCart,
         removeFromCart,
+        updateCartItemQuantity,
         clearCart,
         toggleWishlist,
         isWishlisted,
