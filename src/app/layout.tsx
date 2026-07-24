@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter, Great_Vibes } from "next/font/google";
 import { ShopProvider } from "@/context/ShopContext";
 import { SplashScreen } from "@/components/SplashScreen";
-import { getProducts } from "@/actions/productActions";
-import { getOrders } from "@/actions/orderActions";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -48,34 +46,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [dbProducts, dbOrders] = await Promise.all([
-    getProducts(),
-    getOrders()
-  ]);
-
-  const formattedProducts = dbProducts ? dbProducts.map((p: any) => ({
-    ...p,
-    images: Array.isArray(p.images) ? p.images : (typeof p.images === 'string' ? JSON.parse(p.images) : p.images?.images || []),
-    details: Array.isArray(p.details) ? p.details : (typeof p.details === 'string' ? JSON.parse(p.details) : p.details?.details || []),
-    reviews: p.reviews || []
-  })) : [];
-
-  const formattedOrders = dbOrders ? dbOrders.map((o: any) => ({
-    ...o,
-    items: o.items ? o.items.map((i: any) => ({ product: { ...i.product, images: Array.isArray(i.product.images) ? i.product.images : JSON.parse(i.product.images || '[]'), details: Array.isArray(i.product.details) ? i.product.details : JSON.parse(i.product.details || '[]') } })) : []
-  })) : [];
 
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${playfair.variable} ${inter.variable} ${greatVibes.variable} antialiased`}
       >
-        <ShopProvider initialProducts={formattedProducts as any} initialOrders={formattedOrders as any}>
+        <ShopProvider>
           <SplashScreen />
           {children}
         </ShopProvider>

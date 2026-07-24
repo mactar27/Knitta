@@ -55,37 +55,42 @@ interface ShopContextProps {
 
 const ShopContext = createContext<ShopContextProps | undefined>(undefined);
 
-interface ShopProviderProps {
-  children: React.ReactNode;
-  initialProducts?: Product[];
-  initialOrders?: Order[];
-}
-
-export const ShopProvider: React.FC<ShopProviderProps> = ({ children, initialProducts = [], initialOrders = [] }) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // Sync with server updates
-  useEffect(() => {
-    if (initialProducts.length > 0) {
-      setProducts(initialProducts);
-    }
-  }, [initialProducts]);
-
-  useEffect(() => {
-    if (initialOrders.length > 0) {
-      setOrders(initialOrders);
-    }
-  }, [initialOrders]);
 
   // Hydration-safe initial state loading
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
+        const [dbProducts, dbOrders] = await Promise.all([
+          getProducts(),
+          getOrders()
+        ]);
+        
+        if (dbProducts) {
+          // Cast dbProducts to any since Prisma types might slightly differ from frontend Product type
+          // e.g., JSON fields for images/details, Date objects for createdAt
+          const formattedProducts = dbProducts.map((p: any) => ({
+            ...p,
+            images: Array.isArray(p.images) ? p.images : (typeof p.images === 'string' ? JSON.parse(p.images) : p.images?.images || []),
+            details: Array.isArray(p.details) ? p.details : (typeof p.details === 'string' ? JSON.parse(p.details) : p.details?.details || []),
+            reviews: p.reviews || [] // assuming relations might not be fetched, so default to empty
+          }));
+          setProducts(formattedProducts as unknown as Product[]);
+        }
+
+        if (dbOrders) {
+          const formattedOrders = dbOrders.map((o: any) => ({
+            ...o,
+            items: o.items ? o.items.map((i: any) => ({ product: { ...i.product, images: Array.isArray(i.product.images) ? i.product.images : JSON.parse(i.product.images || '[]'), details: Array.isArray(i.product.details) ? i.product.details : JSON.parse(i.product.details || '[]') } })) : []
+          }));
+          setOrders(formattedOrders as unknown as Order[]);
+        }
 
         try {
           const savedCart = localStorage.getItem("kc_cart");
