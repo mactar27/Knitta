@@ -56,7 +56,7 @@ interface ShopContextProps {
 const ShopContext = createContext<ShopContextProps | undefined>(undefined);
 
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -72,8 +72,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
           getOrders()
         ]);
         
-        // Use DB products if available, otherwise fallback to INITIAL_PRODUCTS
-        if (dbProducts && dbProducts.length > 0) {
+        if (dbProducts) {
           // Cast dbProducts to any since Prisma types might slightly differ from frontend Product type
           // e.g., JSON fields for images/details, Date objects for createdAt
           const formattedProducts = dbProducts.map((p: any) => ({
