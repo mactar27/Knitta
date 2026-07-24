@@ -96,7 +96,8 @@ export default function CartPage() {
                         <span className="text-xs font-semibold px-2 min-w-[24px] text-center">{item.quantity}</span>
                         <button
                           onClick={() => updateCartItemQuantity(item.product.id, item.quantity + 1)}
-                          className="px-2 py-1 text-charcoal-500 hover:bg-sand-50 transition-colors text-sm font-bold"
+                          disabled={item.quantity >= (item.product.stockCount || 1)}
+                          className={`px-3 border-l border-sand-200 transition-colors ${item.quantity >= (item.product.stockCount || 1) ? 'text-sand-300 cursor-not-allowed' : 'text-charcoal-400 hover:bg-sand-50 hover:text-charcoal-900'}`}
                         >
                           +
                         </button>

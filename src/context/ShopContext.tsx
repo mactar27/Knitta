@@ -93,11 +93,16 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setOrders(formattedOrders as unknown as Order[]);
         }
 
-        const storedCart = localStorage.getItem("kc_cart");
+        try {
+          const savedCart = localStorage.getItem("kc_cart");
+          if (savedCart) setCart(JSON.parse(savedCart));
+        } catch (e) {
+          console.error("localStorage error:", e);
+        }
+
         const storedWishlist = localStorage.getItem("kc_wishlist");
         const storedUser = localStorage.getItem("kc_user");
 
-        if (storedCart) setCart(JSON.parse(storedCart));
         if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
         if (storedUser) setCurrentUser(JSON.parse(storedUser));
       } catch (e) {
@@ -116,9 +121,12 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [products, isLoaded]);
 
   useEffect(() => {
-    if (!isLoaded) return;
-    localStorage.setItem("kc_cart", JSON.stringify(cart));
-  }, [cart, isLoaded]);
+    try {
+      localStorage.setItem("kc_cart", JSON.stringify(cart));
+    } catch (e) {
+      // ignore
+    }
+  }, [cart]);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -172,15 +180,16 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Cart Operations
   const addToCart = (product: Product, quantity = 1) => {
-    if (!product.inStock) return;
+    if (!product.inStock || product.stockCount <= 0) return;
     setCart((prev) => {
       const existingIndex = prev.findIndex((item) => item.product.id === product.id);
       if (existingIndex >= 0) {
         const newCart = [...prev];
-        newCart[existingIndex] = { ...newCart[existingIndex], quantity: newCart[existingIndex].quantity + quantity };
+        const newQuantity = Math.min(newCart[existingIndex].quantity + quantity, product.stockCount);
+        newCart[existingIndex] = { ...newCart[existingIndex], quantity: newQuantity };
         return newCart;
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity: Math.min(quantity, product.stockCount) }];
     });
   };
 
@@ -190,9 +199,12 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateCartItemQuantity = (productId: string, quantity: number) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item
-      )
+      prev.map((item) => {
+        if (item.product.id === productId) {
+          return { ...item, quantity: Math.min(Math.max(1, quantity), item.product.stockCount) };
+        }
+        return item;
+      })
     );
   };
 
@@ -248,6 +260,17 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Clear shopper cart
       setCart([]);
+      
+      // Optimistically decrement stockCount in products state
+      setProducts((prev) => prev.map((p) => {
+        const cartItem = cart.find(item => item.product.id === p.id);
+        if (cartItem) {
+          const newStock = Math.max(0, p.stockCount - cartItem.quantity);
+          return { ...p, stockCount: newStock, inStock: newStock > 0 };
+        }
+        return p;
+      }));
+      
       return formattedOrder;
     }
     throw new Error("Failed to place order");
@@ -303,7 +326,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       details: pInfo.details,
       isNewArrival: pInfo.isNewArrival,
       isBestSeller: pInfo.isBestSeller,
-      inStock: true,
+      inStock: pInfo.stockCount! > 0,
+      stockCount: pInfo.stockCount,
     });
 
     if (res.success && res.product) {
@@ -331,7 +355,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       details: updatedProduct.details,
       isNewArrival: updatedProduct.isNewArrival,
       isBestSeller: updatedProduct.isBestSeller,
-      inStock: updatedProduct.inStock,
+      inStock: updatedProduct.stockCount! > 0,
+      stockCount: updatedProduct.stockCount,
     });
 
     if (res.success) {

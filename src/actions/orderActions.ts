@@ -53,6 +53,22 @@ export async function placeOrderAction(data: OrderData) {
         }
       }
     });
+
+    // Decrement stockCount for each item
+    for (const item of items) {
+      const product = await prisma.product.findUnique({ where: { id: item.productId } });
+      if (product) {
+        const newStock = Math.max(0, product.stockCount - item.quantity);
+        await prisma.product.update({
+          where: { id: item.productId },
+          data: {
+            stockCount: newStock,
+            inStock: newStock > 0
+          }
+        });
+      }
+    }
+
     revalidatePath("/admin");
     return { success: true, order };
   } catch (error) {

@@ -329,7 +329,8 @@ export const Navbar = () => {
                             <span className="text-[10px] font-semibold px-1 min-w-[16px] text-center">{item.quantity}</span>
                             <button
                               onClick={() => updateCartItemQuantity(item.product.id, item.quantity + 1)}
-                              className="px-1.5 text-charcoal-500 hover:bg-sand-50 transition-colors text-xs"
+                              disabled={item.quantity >= (item.product.stockCount || 1)}
+                              className={`p-1 transition-colors ${item.quantity >= (item.product.stockCount || 1) ? 'text-sand-300 cursor-not-allowed' : 'text-charcoal-400 hover:text-charcoal-900'}`}
                             >
                               +
                             </button>

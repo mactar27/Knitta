@@ -17,6 +17,7 @@ model Product {
   brand        String
   condition    String
   inStock      Boolean     @default(true)
+  stockCount   Int         @default(1)
   isNewArrival Boolean     @default(false)
   isBestSeller Boolean     @default(false)
   rating       Float       @default(0)

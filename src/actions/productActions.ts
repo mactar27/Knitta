@@ -19,6 +19,7 @@ type ProductData = {
   target: string;
   images: any;
   details: any;
+  stockCount?: number;
 };
 
 export async function getProducts() {
@@ -47,6 +48,7 @@ export async function getProducts() {
             target: p.target,
             images: p.images,
             details: p.details,
+            stockCount: p.stockCount || 1,
           }
         });
       }

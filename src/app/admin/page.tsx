@@ -35,11 +35,16 @@ export default function AdminPage() {
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      const auth = localStorage.getItem("kc_admin_auth");
-      if (auth === "true") {
-        setIsAuthenticated(true);
+      try {
+        const auth = localStorage.getItem("kc_admin_auth");
+        if (auth === "true") {
+          setIsAuthenticated(true);
+        }
+      } catch (e) {
+        console.error("localStorage error:", e);
+      } finally {
+        setIsAuthLoaded(true);
       }
-      setIsAuthLoaded(true);
     }
   }, []);
 
@@ -47,7 +52,7 @@ export default function AdminPage() {
     e.preventDefault();
     if (loginPassword === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
-      localStorage.setItem("kc_admin_auth", "true");
+      try { localStorage.setItem("kc_admin_auth", "true"); } catch (e) {}
       setLoginError("");
     } else {
       setLoginError("Mot de passe incorrect. Veuillez réessayer.");
@@ -56,7 +61,7 @@ export default function AdminPage() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem("kc_admin_auth");
+    try { localStorage.removeItem("kc_admin_auth"); } catch (e) {}
   };
 
   const {
@@ -90,7 +95,8 @@ export default function AdminPage() {
     chest: "22 in",
     length: "26 in",
     sleeves: "24 in",
-    origin: "Fabriqué aux États-Unis"
+    origin: "Fabriqué aux États-Unis",
+    stockCount: 1
   });
 
   const [formSuccess, setFormSuccess] = useState(false);
@@ -105,7 +111,8 @@ export default function AdminPage() {
   // Build a unique customer dictionary from placed orders
   const customersMap: Record<string, { name: string; phone: string; ordersCount: number; totalSpent: number }> = {};
   orders.forEach((order) => {
-    const phoneKey = order.customerPhone.trim();
+    const phoneKey = (order?.customerPhone || "").trim();
+    if (!phoneKey) return;
     if (!customersMap[phoneKey]) {
       customersMap[phoneKey] = {
         name: order.customerName,
@@ -163,7 +170,8 @@ export default function AdminPage() {
               condition: newProduct.condition,
               images: imagesArray,
               details: detailsArray,
-              target: newProduct.target as "Homme" | "Femme" | "Enfant" | "Unisexe"
+              target: newProduct.target as "Homme" | "Femme" | "Enfant" | "Unisexe",
+              stockCount: newProduct.stockCount
             });
           }
         } else {
@@ -179,7 +187,8 @@ export default function AdminPage() {
             isNewArrival: true,
             isBestSeller: false,
             details: detailsArray,
-            target: newProduct.target as any
+            target: newProduct.target as any,
+            stockCount: newProduct.stockCount
           });
         }
         saved = true;
@@ -214,7 +223,8 @@ export default function AdminPage() {
         chest: "22 in",
         length: "26 in",
         sleeves: "24 in",
-        origin: "Fabriqué aux États-Unis"
+        origin: "Fabriqué aux États-Unis",
+        stockCount: 1
       });
 
       setTimeout(() => {
@@ -251,23 +261,23 @@ export default function AdminPage() {
       chest: chestMatch ? chestMatch[1] : "22 in",
       length: lengthMatch ? lengthMatch[1] : "26 in",
       sleeves: sleevesMatch ? sleevesMatch[1] : "",
-      origin: originMatch ? originMatch[1] : "Fabriqué aux États-Unis"
+      origin: originMatch ? originMatch[1] : "Fabriqué aux États-Unis",
+      stockCount: p.stockCount || 1
     });
     
     setIsAddFormOpen(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (!isAuthLoaded) {
-    return <div className="min-h-screen bg-[#FCFAF7] flex items-center justify-center text-charcoal-400">Chargement...</div>;
-  }
-
   return (
     <div className="min-h-screen flex flex-col bg-[#FCFAF7]">
       <Navbar />
 
-      {/* ADMIN LOGIN GATE */}
-      {!isAuthenticated ? (
+      {!isAuthLoaded ? (
+        <main className="flex-1 flex items-center justify-center p-4">
+          <div className="text-charcoal-400 animate-pulse font-serif text-lg">Chargement de l'administration...</div>
+        </main>
+      ) : !isAuthenticated ? (
         <main className="flex-1 flex items-center justify-center px-4 py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -444,9 +454,9 @@ export default function AdminPage() {
                         <div key={p.id} className="flex justify-between items-center text-xs">
                           <div className="flex gap-2 items-center">
                             <div className="relative h-9 w-7 overflow-hidden bg-sand-50 border border-sand-200">
-                              <Image src={p.images[0]} alt={p.name} fill className="object-cover" />
+                              {p?.images?.[0] ? <Image src={p.images[0]} alt={p.name || "Produit"} fill className="object-cover" /> : <Shirt className="w-4 h-4 m-auto text-sand-300" />}
                             </div>
-                            <span className="line-clamp-1 font-serif font-semibold text-charcoal-900 max-w-[200px]">{p.name}</span>
+                            <span className="line-clamp-1 font-serif font-semibold text-charcoal-900 max-w-[200px]">{p?.name}</span>
                           </div>
                           <button
                             onClick={() => editProduct({ ...p, inStock: true })}
@@ -510,6 +520,17 @@ export default function AdminPage() {
                             min={5}
                             value={newProduct.price}
                             onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
+                            className="w-full border border-sand-200 bg-[#FCFAF7] p-2 rounded-xs"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="font-bold text-charcoal-800 uppercase">Qté Dispo</label>
+                          <input
+                            type="number"
+                            required
+                            min={0}
+                            value={newProduct.stockCount}
+                            onChange={(e) => setNewProduct({ ...newProduct, stockCount: Number(e.target.value) })}
                             className="w-full border border-sand-200 bg-[#FCFAF7] p-2 rounded-xs"
                           />
                         </div>
@@ -668,6 +689,7 @@ export default function AdminPage() {
                       <th className="p-4 font-bold">Category</th>
                       <th className="p-4 font-bold">Size</th>
                       <th className="p-4 font-bold">Price</th>
+                      <th className="p-4 font-bold">Stock</th>
                       <th className="p-4 font-bold">Status</th>
                       <th className="p-4 font-bold text-right">Action</th>
                     </tr>
@@ -676,8 +698,8 @@ export default function AdminPage() {
                     {products.map((p) => (
                       <tr key={p.id} className="hover:bg-sand-50/50">
                         <td className="p-4">
-                          <div className="relative h-12 w-9 overflow-hidden border border-sand-200">
-                            <Image src={p.images[0]} alt={p.name} fill className="object-cover" />
+                          <div className="relative h-12 w-9 overflow-hidden border border-sand-200 bg-sand-50 flex items-center justify-center">
+                            {p?.images?.[0] ? <Image src={p.images[0]} alt={p.name || "Produit"} fill className="object-cover" /> : <Shirt className="w-4 h-4 text-sand-300" />}
                           </div>
                         </td>
                         <td className="p-4 font-semibold text-charcoal-950 max-w-[180px] truncate">
@@ -689,9 +711,14 @@ export default function AdminPage() {
                         <td className="p-4 text-charcoal-500">{p.category}</td>
                         <td className="p-4 text-charcoal-800 font-bold">{p.size}</td>
                         <td className="p-4 font-bold text-charcoal-900">{p.price} FCFA</td>
+                        <td className="p-4 font-bold text-charcoal-800">{p.stockCount}</td>
                         <td className="p-4">
                           <button
-                            onClick={() => editProduct({ ...p, inStock: !p.inStock })}
+                            onClick={() => {
+                               // Reset to 1 if sold out, or 0 if in stock (to toggle)
+                               const newStock = p.inStock ? 0 : 1;
+                               editProduct({ ...p, stockCount: newStock, inStock: newStock > 0 });
+                            }}
                             className={`px-2 py-0.5 rounded-full font-semibold text-[9px] uppercase border ${
                               p.inStock
                                 ? "bg-emerald-50 text-emerald-700 border-emerald-100"

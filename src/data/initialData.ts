@@ -17,6 +17,7 @@ export interface Product {
   condition: "Très bon état" | "Bon état" | "Usure naturelle" | "Neuf" | "Fait main";
   images: string[];
   inStock: boolean;
+  stockCount: number;
   isNewArrival: boolean;
   isBestSeller: boolean;
   rating: number;
@@ -40,6 +41,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1588361861040-cf9b1018204d?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: true,
     rating: 4.9,
@@ -67,6 +69,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: true,
     rating: 4.8,
@@ -94,6 +97,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: false,
     rating: 4.7,
@@ -121,6 +125,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: false,
     isBestSeller: true,
     rating: 4.6,
@@ -146,6 +151,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: true,
     rating: 4.9,
@@ -173,6 +179,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: false,
     isBestSeller: false,
     rating: 5.0,
@@ -198,6 +205,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: false,
     isBestSeller: false,
     rating: 4.5,
@@ -223,6 +231,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: false,
     rating: 4.8,
@@ -248,6 +257,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&auto=format&fit=crop&q=80"
     ],
     inStock: true,
+    stockCount: 1,
     isNewArrival: true,
     isBestSeller: false,
     rating: 4.7,
