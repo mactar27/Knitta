@@ -114,11 +114,25 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetchInitialData();
   }, []);
 
-  // Save changes to localStorage whenever state changes
   useEffect(() => {
-    if (!isLoaded) return;
-    localStorage.setItem("kc_products", JSON.stringify(products));
-  }, [products, isLoaded]);
+    try {
+      localStorage.setItem("kc_wishlist", JSON.stringify(wishlist));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [wishlist]);
+
+  useEffect(() => {
+    try {
+      if (currentUser) {
+        localStorage.setItem("kc_user", JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem("kc_user");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     try {
@@ -127,25 +141,6 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // ignore
     }
   }, [cart]);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    localStorage.setItem("kc_wishlist", JSON.stringify(wishlist));
-  }, [wishlist, isLoaded]);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    localStorage.setItem("kc_orders", JSON.stringify(orders));
-  }, [orders, isLoaded]);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    if (currentUser) {
-      localStorage.setItem("kc_user", JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem("kc_user");
-    }
-  }, [currentUser, isLoaded]);
 
   // Auth Operations
   const login = (email: string) => {
