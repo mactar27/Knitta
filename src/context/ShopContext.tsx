@@ -87,7 +87,17 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (dbOrders) {
           const formattedOrders = dbOrders.map((o: any) => ({
             ...o,
-            items: o.items ? o.items.map((i: any) => ({ product: { ...i.product, images: Array.isArray(i.product.images) ? i.product.images : JSON.parse(i.product.images || '[]'), details: Array.isArray(i.product.details) ? i.product.details : JSON.parse(i.product.details || '[]') } })) : []
+            items: o.items ? o.items.map((i: any) => {
+              const p = i.product || { name: "Produit supprimé", price: 0, images: '[]', details: '[]' };
+              return { 
+                product: { 
+                  ...p, 
+                  images: Array.isArray(p.images) ? p.images : JSON.parse(p.images || '[]'), 
+                  details: Array.isArray(p.details) ? p.details : JSON.parse(p.details || '[]') 
+                },
+                quantity: i.quantity 
+              };
+            }) : []
           }));
           setOrders(formattedOrders as unknown as Order[]);
         }

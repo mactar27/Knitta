@@ -20,7 +20,26 @@ export async function getOrders() {
       include: {
         items: {
           include: {
-            product: true
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                category: true,
+                size: true,
+                brand: true,
+                condition: true,
+                target: true,
+                inStock: true,
+                stockCount: true,
+                isNewArrival: true,
+                isBestSeller: true,
+                rating: true,
+                createdAt: true,
+                updatedAt: true,
+                // OMitting images and details to save bandwidth!
+              }
+            }
           }
         }
       }
